@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Store;
+use App\Models\Product;
 use App\Helpers\PaginationHelper;
 
 class StoresController extends Controller
@@ -54,8 +55,8 @@ class StoresController extends Controller
 
     }
 
-    public function edit()
+    public function dash_store()
     {
-
+        return view('dashboard.store.edit')->with('store', auth()->user()->store);
     }
 }

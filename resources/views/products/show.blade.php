@@ -103,6 +103,7 @@
             </svg>
           </button>
         </div>
+        <a href="{{route('contactSeller', ['id'=> $product->id])}}" class="mt-2 p-2 inline-flex justify-center w-full underline text-green-800">Contact Seller</a>
       </form>
     </div>
   </div>

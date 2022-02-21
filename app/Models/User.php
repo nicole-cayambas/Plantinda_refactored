@@ -71,4 +71,8 @@ class User extends Authenticatable
     public function payments(){
         return $this->hasManyThrough(Order::class, Payment::class);
     }
+
+    public function message(){
+        return $this->hasMany(Message::class);
+    }
 }

@@ -63,7 +63,7 @@
                 </div>
               </td>
               <td class="whitespace-nowrap text-gray-600 truncate"></td>
-              <td class="whitespace-nowrap text-gray-600 truncate"> Php {{$order->quantity}} </td>
+              <td class="whitespace-nowrap text-gray-600 truncate"> {{$order->quantity}} </td>
               <td class="whitespace-nowrap text-gray-600 truncate"> Php {{number_format($order->unit_price, 2)}} </td>
               <td class="whitespace-nowrap text-gray-600 truncate"> </td>
             </tr>

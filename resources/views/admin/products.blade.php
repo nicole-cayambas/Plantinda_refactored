@@ -1,5 +1,5 @@
-@extends('dashboard.layouts.app')
-@section('dash_content')
+@extends('admin.layouts.app')
+@section('admin_content')
     <div class="w-full mt-2 sm:m-10 flex flex-col gap-y-4">
         <p class="w-full text-center text-emerald-600">
             {{session('success')}}

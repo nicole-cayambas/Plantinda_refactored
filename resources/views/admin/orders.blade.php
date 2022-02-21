@@ -1,5 +1,5 @@
-@extends('dashboard.layouts.app')
-@section('dash_content')
+@extends('admin.layouts.app')
+@section('admin_content')
 <div class="flex flex-col w-full p-0 sm:mt-10">
     <p class="w-full text-center text-emerald-600">
         {{session('success')}}
@@ -21,6 +21,9 @@
                                 Buyer
                             </th>
                             <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                Store
+                            </th>
+                            <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                 Ship to
                             </th>
                             <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
@@ -28,9 +31,6 @@
                             </th>
                             <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                 Status
-                            </th>
-                            <th scope="col" class="relative py-3 px-6">
-                                <span class="sr-only">Edit</span>
                             </th>
                         </tr>
                     </thead>
@@ -49,6 +49,9 @@
                                         {{$order->buyer_name}}
                                     </td>
                                     <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+                                        {{$order->store->name}}
+                                    </td>
+                                    <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                         {{$order->address}}
                                     </td>
                                     <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
@@ -56,10 +59,6 @@
                                     </td>
                                     <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                         {{$order->status}}
-                                    </td>
-                                    <td class="py-4 px-6 text-sm font-medium text-center whitespace-nowrap">
-                                        <a href="{{route('completeOrder', ['id' => $order->id])}}" class="text-blue-600 dark:text-blue-500 hover:underline">Done</a><br>
-                                        <a href="#" class="text-red-600 dark:text-red-500 hover:underline">Cancel</a>
                                     </td>
                                 </div>
                             </tr>

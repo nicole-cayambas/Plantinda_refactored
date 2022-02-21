@@ -30,4 +30,8 @@ class Store extends Model
     {
         return $this->hasMany(Order::class);
     }
+
+    public function message(){
+        return $this->hasMany(Message::class);
+    }
 }
