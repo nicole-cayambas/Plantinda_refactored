@@ -41,4 +41,8 @@ class Product extends Model
     public function order(){
         return $this->hasManyThrough(User::class, Order::class);
     }
+
+    public function reviews(){
+        return $this->hasMany(Review::class);
+    }
 }

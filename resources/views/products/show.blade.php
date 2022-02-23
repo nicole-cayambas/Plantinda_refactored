@@ -108,7 +108,17 @@
           </button>
         </div>
         <a href="{{route('contactSeller', ['id'=> $product->id])}}" class="mt-2 p-2 inline-flex justify-center w-full underline text-green-800">Contact Seller</a>
+        @auth
+        @if (auth()->user()->order->where('product_id', $product->id)->first() && !auth()->user()->review->where('product_id', $product->id)->first())
+            <a href="{{route('createReview', ['id'=> $product->id])}}" class="mt-2 p-2 inline-flex justify-center w-full underline text-green-800">Create a review</a>
+        @endif
+        @endauth
       </form>
+    </div>
+    <div class="w-full px-4 sm:px-52 py-2 mt-16 grid grid-cols-4">
+      @foreach ($reviews as $review)
+        <x-reviews :review="$review"/>
+      @endforeach
     </div>
   </div>
 </section>

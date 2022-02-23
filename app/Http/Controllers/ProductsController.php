@@ -10,9 +10,9 @@ class ProductsController extends Controller
 {
     public function show($id)
     {
+        $product = Product::find($id);
         if(auth()->check()) {
             $wish = auth()->user()->wishlist()->where('product_id', $id)->first();
-            $product = Product::find($id);
             if($wish) {
                 $inWishlist = true;
             }
@@ -21,11 +21,13 @@ class ProductsController extends Controller
             }
             return view('products.show', [
                 'product' => $product,
-                'inWishlist' => $inWishlist
+                'inWishlist' => $inWishlist,
+                'reviews' => $product->reviews
             ]);
         } else {
             return view('products.show', [
-                'product' => Product::find($id)
+                'product' => $product,
+                'reviews' => $product->reviews
             ]);
         }
         

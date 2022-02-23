@@ -6,7 +6,7 @@
 </p>
 <div class="w-full p-4 flex justify-center">
     
-    <form action="{{route('saveStore')}}" method="POST" class="w-full sm:w-4/5 border-2 p-4 flex flex-col gap-4 rounded-lg">
+    <form action="{{route('saveStore')}}" enctype="multipart/form-data" method="POST" class="w-full sm:w-4/5 border-2 p-4 flex flex-col gap-4 rounded-lg">
         @csrf
         <p class="font-bold">Store Information</p>
         <div>
@@ -36,20 +36,37 @@
         <div class="flex flex-col sm:flex-row w-full sm:justify-evenly">
             <div>
                 <label class="block text-sm font-medium text-gray-700"> Store Photo </label>
-                <div class="mt-1 flex items-center gap-4">
-                    <span class="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-200">
-                        <img class="rounded-circle" src="@if($store){{$store->image}}@endif" alt="">
-                    </span>
-                    <button type="button" class="w-20 border-2 rounded-lg hover:bg-gray-200 p-2">Change</button>
-                </div>
+                    <div class="mt-1 flex items-center gap-4">
+                        <span class="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-200">
+                        @if($store)
+                            @if ($store->image)
+                                <img class="rounded-circle w-full h-full" src="{{asset('images/store_images/'.$store->image)}}" alt="">
+                            @else
+                                <img class="rounded-circle w-full h-full" src="{{asset('images/store_images/null.png')}}" alt="">
+                            @endif
+                        @endif
+                        </span>
+                        <input id="choose-file" type="file" name="image" accept=".jpg, .jpeg, .png, .gif, .svg" hidden>
+                        <button onClick="showChooser()" type="button" class="w-20 border-2 rounded-lg hover:bg-gray-200 p-2">Change</button>
+                        <p id="fileName"></p>
+                    </div>
+
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700"> Store Banner </label>
                 <div class="mt-1 flex items-center gap-4">
                     <span class="inline-block h-12 w-40 overflow-hidden bg-gray-200">
-                        <img src="@if($store){{$store->banner_image}}@endif" alt="">
+                        @if($store)
+                            @if ($store->banner_image)
+                                <img class="rounded-lg w-full h-full" src="{{asset('images/store_banners/'.$store->banner_image)}}" alt="">
+                            @else
+                                <img class="rounded-lg w-full h-full" src="{{asset('images/store_banners/null.png')}}" alt="">
+                            @endif
+                        @endif
                     </span>
-                    <button type="button" class="w-20 border-2 rounded-lg hover:bg-gray-200 p-2">Change</button>
+                    <input id="choose-banner" type="file" name="banner_image" accept=".jpg, .jpeg, .png, .gif, .svg" hidden>
+                    <button id="banner_btn" type="button" class="w-20 border-2 rounded-lg hover:bg-gray-200 p-2">Change</button>
+                    <p id="bannerName"></p>
                 </div>
             </div>
         </div>
@@ -59,4 +76,30 @@
     </form>
 </div>
 </div>
+
+<script>
+    const fileSelector = document.getElementById('choose-file');
+    const bannerSelector = document.getElementById('choose-banner');
+    function showChooser() {
+      fileSelector.click();
+    }
+    fileSelector.addEventListener('change', (event) => {
+      const fileList = event.target.files;
+      const file = fileList[0];
+      const fileName = document.getElementById('fileName');
+      fileName.innerHTML = file.name;
+    });
+
+    bannerSelector.addEventListener('change', (event) => {
+      const fileList = event.target.files;
+      const file = fileList[0];
+      const fileName = document.getElementById('bannerName');
+      fileName.innerHTML = file.name;
+    });
+
+    const bannerBtn = document.getElementById('banner_btn');
+    bannerBtn.addEventListener('click', (event) => {
+      bannerSelector.click();
+    });
+</script>
 @endsection

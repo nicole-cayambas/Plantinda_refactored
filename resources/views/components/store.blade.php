@@ -1,10 +1,14 @@
-{{-- @props(['store' => $store])']) --}}
+
 <a href="{{route('showStore', ['id'=>$store->id])}}" id="store-card" class="mt-4 rounded-xl border-2 p-4 w-full flex flex-col sm:grid sm:grid-cols-4 gap-4">
-    <div class="flex flex-col gap-2">
-        {{-- change path later --}}
-        <h1>{{$store->id}} <strong class="text-lg">{{$store->name}}</strong></h1>
+    <div class="flex flex-col col-span-2 gap-2">
+        <div class="flex flex-row gap-2 items-center">
+            <img src="@if($store->image){{asset('images/store_images/'.$store->image)}} @else {{asset('images/store_images/null.png')}} @endif" class="rounded-circle w-6 h-6">
+            <strong class="text-lg">{{$store->name}}</strong>
+        </div>
         <p>{{$store->certifications}}</p>
-        <img src="{{asset('images/store_images/retro.jpg')}}" width="80px" height="80px"> 
+        <div class="w-full sm:w-1/2 h-36">
+            <img src="@if($store->banner_image){{asset('images/store_banners/'.$store->banner_image)}} @else {{asset('images/store_banners/null.png')}} @endif" class="w-full h-full rounded-lg"> 
+        </div>
         <p>Seller: <strong>{{$store->user->username}}</strong></p>
     </div>
     <div class="flex flex-col gap-2 justify-center">
@@ -16,8 +20,8 @@
         <p>Delivery rate: <strong>{{$store->delivery_rate}}%</strong></p>
         <p>Number of transactions: <strong>{{$store->num_transactions}}</strong></p>
     </div>
-    <div class="flex flex-col gap-2 sm:px-8 justify-center">
+    {{-- <div class="flex flex-col gap-2 sm:px-8 justify-center">
         <button class="bg-emerald-400 hover:bg-emerald-800 hover:text-white">Follow</button>
         <button class="border border-emerald-600 hover:bg-gray-200">Like</button>
-    </div>
+    </div> --}}
 </a>

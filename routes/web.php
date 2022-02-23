@@ -14,6 +14,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SendOrderController;
 use App\Http\Controllers\MessagesController;
+use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\EarningsController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
@@ -56,6 +57,12 @@ Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout')
 
 Route::get('/products/{id}', [ProductsController::class, 'show'])->name('showProduct');
 Route::post('/products/{id}', [SendOrderController::class, 'store'])->name('sendOrder')->middleware('auth');
+
+Route::get('/products/{id}/review', [ReviewsController::class, 'create'])->name('createReview');
+Route::post('/products/{id}/review', [ReviewsController::class, 'new']);
+Route::get('/products/{id}/review/edit', [ReviewsController::class, 'edit'])->name('editReview');
+Route::post('/products/{id}/review/edit', [ReviewsController::class, 'store']);
+Route::get('/products/{id}/review/delete', [ReviewsController::class, 'destroy'])->name('deleteReview');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth', 'checkUserType:seller');
 Route::get('/seller/products', [ProductsController::class, 'dash_index'])->name('dashboard.products')->middleware('auth', 'checkUserType:seller');
