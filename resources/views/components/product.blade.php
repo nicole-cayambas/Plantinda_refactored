@@ -1,6 +1,11 @@
 <div class="group relative rounded-lg shadow-lg p-4 sm:p-2">
     <div class="w-full min-h-80 bg-gray-200 aspect-w-1 rounded-lg aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
-        <img src="{{$product->image}}" class="w-full h-full object-center object-cover lg:w-full lg:h-full">
+        @if (!str_starts_with($product->image, 'http'))
+            <img src="{{asset('images/products/'.$product->image)}}" alt="{{ $product->name }}"  class="w-full h-full object-center object-cover lg:w-full lg:h-full">
+        @else
+            <img src="{{$product->image}}" alt="{{ $product->name }}"  class="w-full h-full object-center object-cover lg:w-full lg:h-full">
+        @endif
+
     </div>
     <div class="mt-4 flex justify-between">
         <div>

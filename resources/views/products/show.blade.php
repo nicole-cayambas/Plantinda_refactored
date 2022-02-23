@@ -6,7 +6,11 @@
         {{session('success')}}
       </p>
     <div class="lg:w-4/5 mx-auto flex flex-wrap">
-      <img alt="ecommerce" class="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200" src="{{$product->image}}">
+      @if (!str_starts_with($product->image, 'http'))
+            <img src="{{asset('images/products/'.$product->image)}}" alt="{{ $product->name }}" class="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200">
+        @else
+            <img src="{{$product->image}}" alt="{{ $product->name }}" class="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200">
+        @endif
       <form action="{{route('sendOrder',['id' => $product->id])}}" method="POST" class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
         @csrf
         <h2 class="text-sm title-font text-gray-500 tracking-widest">{{$product->store->name}}</h2>

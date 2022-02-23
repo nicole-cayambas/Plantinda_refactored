@@ -12,7 +12,7 @@
         </div>
       </div>
       <div class="mt-5 md:mt-0 md:col-span-2">
-        <form action="{{route('updateProfile')}}" method="POST">
+        <form action="{{route('updateProfile')}}" method="POST" enctype="multipart/form-data">
             @csrf
           <div class="shadow sm:rounded-md sm:overflow-hidden">
             <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
@@ -38,13 +38,20 @@
               <div>
                 <label class="block text-sm font-medium text-gray-700"> Photo </label>
                 <div class="mt-1 flex items-center">
+                  @if ($user->icon)
                   <span class="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100">
-                    <svg class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                    </svg>
+                     <img src="{{ asset('images/icons/'.$user->icon) }}" alt="">
                   </span>
-                  <button type="button" class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Change</button>
+                  <button onClick="showChooser()" type="button" class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Change</button>
+                  <input id="choose-file" type="file" name="image" accept=".jpg, .jpeg, .png, .gif, .svg" hidden>
+                  <p id="fileName"></p>
+                  @else 
+                  <input type="file" name="image" accept=".jpg, .jpeg, .png, .gif, .svg">
+                  @endif
                 </div>
+                @error('image')
+                    <p class="text-red-500 text-xs italic">{{$message}}</p>
+                @enderror
               </div>
 
               <div>
@@ -79,4 +86,17 @@
   
   
 </div>
+
+<script>
+    const fileSelector = document.getElementById('choose-file');
+    function showChooser() {
+      fileSelector.click();
+    }
+    fileSelector.addEventListener('change', (event) => {
+      const fileList = event.target.files;
+      const file = fileList[0];
+      const fileName = document.getElementById('fileName');
+      fileName.innerHTML = file.name;
+    });
+</script>
 @endsection

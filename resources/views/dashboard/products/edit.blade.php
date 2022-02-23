@@ -7,7 +7,7 @@
             {{session('success')}}
         </p>
     </div>
-    <form action="{{route('updateProduct', ['id' => $product->id])}}" method="POST" class="w-full sm:w-11/12 flex flex-col gap-4">
+    <form action="{{route('updateProduct', ['id' => $product->id])}}" method="POST" enctype="multipart/form-data" class="w-full sm:w-11/12 flex flex-col gap-4">
         @csrf
         <div class="grid grid-cols-3 flex items-center">
             <label for="name">Product Name</label>
@@ -58,13 +58,15 @@
                 <label class="block text-sm font-medium text-gray-700"> Photo </label>
                 <div class="mt-1 flex items-center">
                   <span class="inline-block h-12 w-20 rounded-lg overflow-hidden bg-gray-100">
-                    @if ($product->photo)
+                    @if (!str_starts_with($product->image, 'https://via.placeholder'))
                         <img src="{{asset('images/products/'.$product->image)}}" alt="">
                     @else
-                        {{-- <img src="../../../images/default-product-img.png" alt=""> --}}
+                        <img src="{{asset('images/products/null.png')}}" alt="">
                     @endif
                   </span>
-                  <button type="button" class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Change</button>
+                  <input type="file" name="image" id="image" accept=".jpg, .jpeg, .png, .gif, .svg" hidden>
+                    <button onClick="showChooser()" type="button" class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Change</button>
+                    <p id="fileName"></p>
                 </div>
             </div>
         </div>
@@ -74,4 +76,16 @@
         </div>
     </form>
 </div>
+<script>
+    const fileSelector = document.getElementById('image');
+    function showChooser() {
+      fileSelector.click();
+    }
+    fileSelector.addEventListener('change', (event) => {
+      const fileList = event.target.files;
+      const file = fileList[0];
+      const fileName = document.getElementById('fileName');
+      fileName.innerHTML = file.name;
+    });
+</script>
 @endsection

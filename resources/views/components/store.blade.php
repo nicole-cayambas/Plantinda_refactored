@@ -1,9 +1,10 @@
 {{-- @props(['store' => $store])']) --}}
 <a href="{{route('showStore', ['id'=>$store->id])}}" id="store-card" class="mt-4 rounded-xl border-2 p-4 w-full flex flex-col sm:grid sm:grid-cols-4 gap-4">
     <div class="flex flex-col gap-2">
+        {{-- change path later --}}
         <h1>{{$store->id}} <strong class="text-lg">{{$store->name}}</strong></h1>
         <p>{{$store->certifications}}</p>
-        <img src="{{$store->image}}" width="80px" height="80px">
+        <img src="{{asset('images/store_images/retro.jpg')}}" width="80px" height="80px"> 
         <p>Seller: <strong>{{$store->user->username}}</strong></p>
     </div>
     <div class="flex flex-col gap-2 justify-center">

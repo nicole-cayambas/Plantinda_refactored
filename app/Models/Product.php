@@ -24,6 +24,7 @@ class Product extends Model
         'range_2_max',
         'range_3_max',
         'range_4_max',
+        'image',
     ];
     public function store(){
         return $this->belongsTo(Store::class);

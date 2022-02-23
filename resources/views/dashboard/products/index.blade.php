@@ -11,9 +11,15 @@
         @foreach ($products as $product)
             <div class="bg-white shadow-md p-8 rounded-lg">
                 <div class="w-full flex flex-col sm:flex-row gap-4">
+                    @if (!str_starts_with($product->image, 'https://via.placeholder'))
+                        <div class="w-full sm:w-1/6">
+                            <img src="{{asset('images/products/'.$product->image)}}" alt="{{ $product->name }}" class="w-full rounded-md">
+                        </div>
+                    @else
                     <div class="w-full sm:w-1/6">
-                        <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full rounded-md">
+                        <img src="{{$product->image}}" alt="{{ $product->name }}" class="w-full rounded-md">
                     </div>
+                    @endif
                     <h3 class="w-full sm:w-1/6 text-center"><a href="/products/{{$product->id}}" class="text-lg font-bold">{{$product->name}}</a></h3>
                     <p class="w-full sm:w-1/6 text-sm">{{Str::limit($product->description, 120)}}</p>
                         <div class="w-full sm:w-1/6 text-center">

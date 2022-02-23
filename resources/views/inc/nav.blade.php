@@ -82,8 +82,9 @@
     <div class="hidden sm:ml-3 sm:block sm:relative">
         <div>
           <button type="button" onclick="toggleProfile()" class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-            <span class="sr-only">Open user menu</span>
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="39" height="39" viewBox="0 0 39 39">
+            @guest
+              <span class="sr-only">Open user menu</span>
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="39" height="39" viewBox="0 0 39 39">
                 <defs>
                   <path id="path-2" fill-rule="evenodd" d="M8.27261655 0h.6055447c3.18751134 0 5.77536614 2.5878548 5.77536614 5.77536614s-2.5878548 5.77536613-5.77536614 5.77536613h-.6055447c-3.18751134 0-5.77536614-2.5878548-5.77536614-5.77536613C2.49725041 2.58785479 5.08510521 0 8.27261655 0z"/>
                   <mask id="mask-3" x="-11" y="-11" maskContentUnits="userSpaceOnUse" maskUnits="userSpaceOnUse">
@@ -99,6 +100,32 @@
                   </g>
                 </g>
               </svg>
+            @endguest
+            @auth
+              @if(!auth()->user()->icon)
+              <span class="sr-only">Open user menu</span>
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="39" height="39" viewBox="0 0 39 39">
+                  <defs>
+                    <path id="path-2" fill-rule="evenodd" d="M8.27261655 0h.6055447c3.18751134 0 5.77536614 2.5878548 5.77536614 5.77536614s-2.5878548 5.77536613-5.77536614 5.77536613h-.6055447c-3.18751134 0-5.77536614-2.5878548-5.77536614-5.77536613C2.49725041 2.58785479 5.08510521 0 8.27261655 0z"/>
+                    <mask id="mask-3" x="-11" y="-11" maskContentUnits="userSpaceOnUse" maskUnits="userSpaceOnUse">
+                      <rect width="39" height="39" x="-11" y="-11" fill="black"/>
+                      <use fill="white" xlink:href="#path-2"/>
+                    </mask>
+                  </defs>
+                  <g>
+                    <ellipse cx="19.5" cy="19.5" fill="rgb(0,0,0)" rx="19.5" ry="19.5"/>
+                    <g transform="translate(11 11)">
+                      <use fill-opacity="0" stroke="rgb(255,255,255)" stroke-width="4" mask="url(#mask-3)" xlink:href="#path-2"/>
+                      <path fill="none" stroke="rgb(255,255,255)" stroke-width="2" d="M0 17.09589124s.65626177-3.54515897 8.57494927-3.54515897c7.9186875 0 8.57857812 3.5 8.57857812 3.5"/>
+                    </g>
+                  </g>
+                </svg>
+              @else
+              <span class="inline-block h-10 w-10 rounded-full overflow-hidden bg-gray-100">
+                <img src="{{ asset('images/icons/'.auth()->user()->icon) }}" alt="">
+              </span>
+              @endif
+            @endauth
           </button>
         </div>
         <div id="menu_wrap" class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">

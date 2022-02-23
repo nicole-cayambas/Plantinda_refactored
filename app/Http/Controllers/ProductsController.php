@@ -58,11 +58,17 @@ class ProductsController extends Controller
     public function store(Request $request){
         $this->validate($request, [
             'name' => 'required',
-            // 'description' => 'required',
-            // 'price' => 'required',
-            // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'description' => 'required',
+            'summary' => 'required',
+            'unit_price_1' => 'required',
+            'range_1_min' => 'required',
+            'range_1_max' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
+        $image_name = time().'-'.$request->name.'.'.$request->image->extension();
+        $request->image->move(public_path('images/products'), $image_name);
+        
         $product = auth()->user()->store->products()->create([
             'name' => $request->name,
             'description' => $request->description,
@@ -79,7 +85,7 @@ class ProductsController extends Controller
             'range_2_max' => $request->range_2_max,
             'range_3_max' => $request->range_3_max,
             'range_4_max' => $request->range_4_max,
-            // 'image' => $request->image,
+            'image' => $image_name,
         ]);
         
         return redirect()->route('dashboard.products')->with('success', 'Product created successfully');
@@ -88,10 +94,15 @@ class ProductsController extends Controller
     public function update(Request $request, $id){
         $this->validate($request, [
             'name' => 'required',
-            // 'description' => 'required',
-            // 'price' => 'required',
-            // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'description' => 'required',
+            'summary' => 'required',
+            'unit_price_1' => 'required',
+            'range_1_min' => 'required',
+            'range_1_max' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+        $image_name = time().'-'.$request->name.'.'.$request->image->extension();
+        $request->image->move(public_path('images/products'), $image_name);
 
         $product = auth()->user()->store->products->find($id);
         $product->name = $request->name;
@@ -109,9 +120,7 @@ class ProductsController extends Controller
         $product->range_2_max = $request->range_2_max;
         $product->range_3_max = $request->range_3_max;
         $product->range_4_max = $request->range_4_max;
-        // if($request->hasFile('image')) {
-        //     $product->image = $request->image->store('products');
-        // }
+        $product->image = $image_name;
         $product->save();
         return redirect()->back()->with('success', 'Product updated successfully');
     }

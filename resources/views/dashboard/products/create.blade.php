@@ -7,28 +7,50 @@
             {{session('success')}}
         </p>
     </div>
-    <form action="{{route('saveProduct')}}" method="POST" class="w-full sm:w-11/12 flex flex-col gap-4">
+    <form action="{{route('saveProduct')}}" method="POST" enctype="multipart/form-data" class="w-full sm:w-11/12 flex flex-col gap-4">
         @csrf
         <div class="grid grid-cols-3 flex items-center">
             <label for="name">Product Name</label>
             <input type="text" name="name" id="name" class="col-span-2 p-2 rounded border-2 focus:outline-0">
         </div>
+        @error('name')
+            <p class="text-red-500 text-xs italic">{{$message}}</p>
+        @enderror
         <div class="grid grid-cols-3 flex items-center">
             <label for="summary">Summary</label>
             <input type="text" name="summary" id="summary" class="col-span-2 p-2 rounded border-2 focus:outline-0">
         </div>
+        @error('summary')
+            <p class="text-red-500 text-xs italic">{{$message}}</p>
+        @enderror
         <div class="grid grid-cols-3 flex items-center">
             <label for="description">Description</label>
             <input type="textarea" name="description" id="description" class="col-span-2 p-2 rounded border-2 focus:outline-0">
         </div>
+        @error('description')
+            <p class="text-red-500 text-xs italic">{{$message}}</p>
+        @enderror
         <div class="grid grid-cols-6 flex items-center justify-start gap-1">
             <label for="price1">Unit Price</label>
             <input type="number" name="unit_price_1" id="price1" class="p-2 rounded border-2 focus:outline-0">
+            
             <label for="range_1_min">Min Quantity</label>
             <input type="number" name="range_1_min" id="range_1_min" class="p-2 rounded border-2 focus:outline-0">
+            
             <label for="range_1_max">Max Quantity</label>
             <input type="number" name="range_1_max" id="range_1_max" class="p-2 rounded border-2 focus:outline-0">
+            
         </div>
+        @error('unit_price_1')
+            <p class="text-red-500 text-xs italic">{{$message}}</p>
+        @enderror
+        @error('range_1_min')
+            <p class="text-red-500 text-xs italic">{{$message}}</p>
+        @enderror
+        @error('range_1_max')
+            <p class="text-red-500 text-xs italic">{{$message}}</p>
+        @enderror
+        
         <div class="grid grid-cols-6 flex items-center justify-start gap-1">
             <label for="price2">Unit Price</label>
             <input type="number" name="unit_price_2" id="price2" class="p-2 rounded border-2 focus:outline-0">
@@ -53,21 +75,31 @@
             <label for="range_4_max">Max Quantity</label>
             <input type="number" name="range_4_max" id="range_4_max" class="p-2 rounded border-2 focus:outline-0">
         </div>
-        <div class="flex items-center justify-start gap-1">
-            <div>
-                <label class="block text-sm font-medium text-gray-700"> Photo </label>
-                <div class="mt-1 flex items-center">
-                  <span class="inline-block h-12 w-20 rounded-lg overflow-hidden bg-gray-100">
-                        <img src="../../../images/default-product-img.png" alt="">
-                  </span>
-                  <button type="button" class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Upload photo</button>
-                </div>
-            </div>
+        <div class="flex items-center justify-start gap-2">
+            <label class="block text-sm font-medium text-gray-700"> Photo </label>
+            <input type="file" name="image" id="image" accept=".jpg, .jpeg, .png, .gif, .svg" hidden>
+            <button onClick="showChooser()" type="button" class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Upload photo</button>
+            <p id="fileName"></p>
         </div>
+        @error('image')
+            <p class="text-red-500 text-xs italic">{{$message}}</p>
+        @enderror
 
         <div class="flex items-center justify-center gap-1">
             <button type="submit" class="w-full p-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">Save</button>
         </div>
     </form>
 </div>
+<script>
+    const fileSelector = document.getElementById('image');
+    function showChooser() {
+      fileSelector.click();
+    }
+    fileSelector.addEventListener('change', (event) => {
+      const fileList = event.target.files;
+      const file = fileList[0];
+      const fileName = document.getElementById('fileName');
+      fileName.innerHTML = file.name;
+    });
+</script>
 @endsection
