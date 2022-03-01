@@ -12,8 +12,8 @@ class Message extends Model
         'subject',
         'body', 
         'product_id', 
-        'user_id', 
-        'store_id'
+        'from', 
+        'to'
     ];
 
     public function store()
@@ -24,5 +24,10 @@ class Message extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
     }
 }

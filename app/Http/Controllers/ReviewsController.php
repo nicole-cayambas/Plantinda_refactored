@@ -18,7 +18,7 @@ class ReviewsController extends Controller
     {   
         if(auth()->user()->review->where('product_id', $id)->count() == 0) {
             $this->validate($request, [
-                'rating' => 'required',
+                'rating' => 'required|integer|max:5|min:1',
             ]);
 
             // dd($request->all());
@@ -27,6 +27,10 @@ class ReviewsController extends Controller
                 'comment' => $request->comment,
                 'product_id' => $id
             ]);
+
+            $product = Product::find($id);
+            $product->rating = $product->reviews->avg('rating');
+            $product->save();
 
             return redirect()->back()->with('status', 'Review added successfully');
         } else {
@@ -37,7 +41,10 @@ class ReviewsController extends Controller
 
     public function destroy($id){
         $review = auth()->user()->review->find($id);
+        $product = Product::find($review->product_id);
         $review->delete();
+        $product->rating = $product->reviews->avg('rating');
+        $product->save();
         return redirect()->back();
     }
 
@@ -53,8 +60,9 @@ class ReviewsController extends Controller
     public function store(Request $request, $id)
     {
         $this->validate($request, [
-            'rating' => 'required',
+            'rating' => 'required|integer|max:5|min:1',
         ]);
+
         
         // dd(auth()->user()->review->where('product_id', $id)->first());
         $review = auth()->user()->review->where('product_id', $id)->first();
@@ -62,6 +70,10 @@ class ReviewsController extends Controller
         $review->update(
             ['rating' => $request->rating, 'comment' => $request->comment]
         );
+        $product = Product::find($id);
+        $product->rating = $product->reviews->avg('rating');
+        $product->save();
+
         return redirect()->back()->with('success', 'Review updated successfully');
     }
 }

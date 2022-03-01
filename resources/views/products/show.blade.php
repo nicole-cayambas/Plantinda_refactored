@@ -18,12 +18,12 @@
         <input type="number" value="{{$product->id}}" name="product_id" hidden>
         <div class="flex mb-4">
           <span class="flex items-center">
-              @for($i = 0; $i < $product->rating; $i++)
+              @for($i = 0; $i < floor($product->rating) && $i < 5; $i++)
               <svg fill="black" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-red-500" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
               </svg>
               @endfor
-              @for($i = 0; $i < 5-$product->rating; $i++)
+              @for($i = 0; $i < floor(5-$product->rating); $i++)
               <svg fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-red-500" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
               </svg>
@@ -93,7 +93,7 @@
           </div>
           <div class="flex flex-col w-2/3 justify-end items-end">
             <p class="text-gray-700 text-sm font-semibold flex justify-end">Subtotal: Php <input type="number" class="text-right w-20" id="subtotal" name="subtotal" value="0" readonly></p>
-            <p class="text-gray-700 text-sm font-semibold flex justify-end">Shipping: Php <input type="number" class="text-right w-20" id="shipping" value="{{50}}" name="shipping" readonly></p>
+            <p class="text-gray-700 text-sm font-semibold flex justify-end">Shipping: Php <input type="number" class="text-right w-20" id="shipping" value="{{$product->shipping_price}}" name="shipping" readonly></p>
             
             <p class="text-gray-700 text-sm font-bold flex justify-end">Total: Php <input type="number" name="total" class="text-right w-20" id="total" value="0" readonly></p>
           </div>
@@ -109,12 +109,20 @@
         </div>
         <a href="{{route('contactSeller', ['id'=> $product->id])}}" class="mt-2 p-2 inline-flex justify-center w-full underline text-green-800">Contact Seller</a>
         @auth
-        @if (auth()->user()->order->where('product_id', $product->id)->first() && !auth()->user()->review->where('product_id', $product->id)->first())
+        @if (auth()->user()->order()->withTrashed()->where('product_id', $product->id)->where('status', 'completed')->first() && !auth()->user()->review->where('product_id', $product->id)->first())
             <a href="{{route('createReview', ['id'=> $product->id])}}" class="mt-2 p-2 inline-flex justify-center w-full underline text-green-800">Create a review</a>
         @endif
         @endauth
       </form>
     </div>
+
+    <h1 class="w-full px-4 sm:px-52 py-2 mt-16 text-center font-semibold">Product Details</h1>
+    <div class="w-full px-4 sm:px-52 py-2 mt-16">
+      <p>{!! nl2br($product->description) !!}</p>
+    </div>
+
+    <h1 class="w-full px-4 sm:px-52 py-2 mt-16 text-center font-semibold">Reviews</h1>
+    
     <div class="w-full px-4 sm:px-52 py-2 mt-16 grid grid-cols-4">
       @foreach ($reviews as $review)
         <x-reviews :review="$review"/>

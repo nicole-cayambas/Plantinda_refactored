@@ -109,33 +109,23 @@
 </div>
     
 <main class="w-full mx-auto px-4 sm:px-6 lg:px-8">
-  <div class="relative z-10 flex items-baseline justify-between pt-6 pb-6 border-b border-gray-200">
+  <div class="relative z-10 flex items-center justify-between pt-6 pb-6 border-b border-gray-200">
     <h1 class="text-2xl font-bold tracking-tight text-gray-900">Home</h1>
+    @if($status == 'search') <p> Showing results for '{{$query}}'</p> @endif
+    @if($status == 'sort' && $sorter!= "") <p> Sorted by {{$sorter}}</p> @endif
     <div class="flex items-center">
-      <div class="relative inline-block text-left">
-        <div>
-          <button onclick="toggleSort()" type="button" class="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900" id="menu-button" aria-expanded="false" aria-haspopup="true">
-            Sort
-            <!-- Heroicon name: solid/chevron-down -->
-            <svg class="flex-shrink-0 -mr-1 ml-1 h-5 w-5 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-            </svg>
-          </button>
-        </div>
-        <div id="sort" class="hidden origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-2xl bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-          <div class="py-1" role="none">
-            <!--
-              Active: "bg-gray-100", Not Active: ""
-              Selected: "font-medium text-gray-900", Not Selected: "text-gray-500"
-            -->
-            <a href="#" class="font-medium text-gray-900 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0"> Most Popular </a>
-            <a href="#" class="text-gray-500 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-1"> Best Rating </a>
-            <a href="#" class="text-gray-500 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-2"> Newest </a>
-            <a href="#" class="text-gray-500 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-3"> Price: Low to High </a>
-            <a href="#" class="text-gray-500 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-4"> Price: High to Low </a>
-          </div>
-        </div>
-      </div>
+       <form action="{{route('applySort')}}" method="GET" id="sort" class="group inline-flex justify-center hover:text-gray-900 w-15 sm:w-40 rounded-md shadow-2xl bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" tabindex="-1"> 
+        @if($status == 'search' || $status == 'sort')
+          <input type="text" name="search_query" value="@if($query) {{$query}} @endif" hidden>
+        @endif
+        <select class="py-1 relative inline-block text-left" role="none" id="sortBy" name="sorter">
+          <option class="text-gray-500 block px-4 py-2 text-sm" value=""> Sort By </a>
+          <option class="text-gray-500 block px-4 py-2 text-sm" value="newest" @if($status == 'sort' && $sorter=="newest") selected @endif> Newest </a>
+          <option class="text-gray-500 block px-4 py-2 text-sm" value="rating" @if($status == 'sort' && $sorter=="rating") selected @endif> Best Rating </a>
+          <option class="text-gray-500 block px-4 py-2 text-sm" value="price_asc" @if($status == 'sort' && $sorter=="price_asc") selected @endif> Price: Low to High </a>
+          <option class="text-gray-500 block px-4 py-2 text-sm" value="price_desc" @if($status == 'sort' && $sorter=="price_desc") selected @endif> Price: High to Low </a>
+        </select>
+      </form>
       <button onclick="toggleFilter()" type="button" class="p-2 -m-2 ml-4 sm:ml-6 text-gray-400 hover:text-gray-500 lg:hidden">
         <span class="sr-only">Filters</span>
         <!-- Heroicon name: solid/filter -->
@@ -249,10 +239,10 @@
         const filter = document.getElementById('filter');
         filter.classList.toggle('hidden');
     }
-    function toggleSort(){
-        const sort = document.getElementById('sort');
-        sort.classList.toggle('hidden');
-    }
+    sorter = document.getElementById('sortBy');
+    sorter.addEventListener('change', function() {
+        this.form.submit();
+    });
 </script>
   
 @endsection

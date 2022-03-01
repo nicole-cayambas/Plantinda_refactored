@@ -24,6 +24,7 @@ class Product extends Model
         'range_2_max',
         'range_3_max',
         'range_4_max',
+        'shipping_price',
         'image',
     ];
     public function store(){
@@ -44,5 +45,9 @@ class Product extends Model
 
     public function reviews(){
         return $this->hasMany(Review::class);
+    }
+
+    public function message(){
+        return $this->hasMany(Message::class);
     }
 }

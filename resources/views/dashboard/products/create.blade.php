@@ -75,6 +75,10 @@
             <label for="range_4_max">Max Quantity</label>
             <input type="number" name="range_4_max" id="range_4_max" class="p-2 rounded border-2 focus:outline-0">
         </div>
+        <div>
+            <label for="shipping_price">Shipping (Base price)</label>
+            <input type="number" name="shipping_price" id="shipping_price" class="p-2 rounded border-2 focus:outline-0">
+        </div>
         <div class="flex items-center justify-start gap-2">
             <label class="block text-sm font-medium text-gray-700"> Photo </label>
             <input type="file" name="image" id="image" accept=".jpg, .jpeg, .png, .gif, .svg" hidden>

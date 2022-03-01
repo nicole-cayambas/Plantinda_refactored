@@ -13,7 +13,8 @@
             <label for="seller_email">Send To</label>
             <input type="text" name="seller_email" id="seller_email" value="{{$seller->email}}" class="p-2 focus:outline-none focus:bg-gray-100 border-2 w-full" readonly>
             <input type="text" name="store_name" id="store_name" value="{{$store->name}}" class="p-2 focus:outline-none focus:bg-gray-100 border-2 w-full" readonly>
-            <input type="number" name="store_id" id="store_id" value="{{$store->id}}" hidden>
+            <input type="number" name="to" value="{{$store->id}}" hidden>
+            <input type="number" name="from" value="{{auth()->user()->id}}" hidden>
         </div>
         <div>
             <input class="p-2 focus:outline-none focus:bg-gray-100 border-2 w-full" type="text" name="subject" placeholder="Subject">
@@ -22,7 +23,7 @@
             <p class="text-red-500 text-xs italic">{{$message}}</p>
         @enderror
         <div>
-            <input class="p-2 focus:outline-none focus:bg-gray-100 border-2 w-full h-36" type="textarea" name="body" placeholder="Body">
+            <textarea class="p-2 focus:outline-none focus:bg-gray-100 border-2 w-full h-36" name="body" placeholder="Body"></textarea>
         </div>
         @error('body')
             <p class="text-red-500 text-xs italic">{{$message}}</p>

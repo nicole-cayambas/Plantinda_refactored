@@ -16,7 +16,7 @@
             <p class="text-red-500 text-xs italic">{{$message}}</p>
         @enderror
         <div>
-            <input class="p-2 focus:outline-none focus:bg-gray-100 border-2 w-full h-36" type="textarea" name="description" placeholder="Description" @if ($store) value="{{$store->description}}" @endif>
+            <textarea class="p-2 focus:outline-none focus:bg-gray-100 border-2 w-full h-36" name="description" placeholder="Description">@if ($store){!! $store->description !!}@endif</textarea>
         </div>
         @error('description')
             <p class="text-red-500 text-xs italic">{{$message}}</p>

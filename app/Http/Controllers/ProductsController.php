@@ -36,6 +36,9 @@ class ProductsController extends Controller
 
     public function dash_index()
     {
+        if(!auth()->user()->store){
+            return redirect()->route('createStore')->with('status', 'You need to create a store first');
+        }
         $store = auth()->user()->store;
         $products = $store->products->sortByDesc('created_at');
         $products = PaginationHelper::paginate($products, 30);
@@ -65,6 +68,7 @@ class ProductsController extends Controller
             'unit_price_1' => 'required',
             'range_1_min' => 'required',
             'range_1_max' => 'required',
+            'shipping_price' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -87,6 +91,7 @@ class ProductsController extends Controller
             'range_2_max' => $request->range_2_max,
             'range_3_max' => $request->range_3_max,
             'range_4_max' => $request->range_4_max,
+            'shipping_price' => $request->shipping_price,
             'image' => $image_name,
         ]);
         
@@ -101,6 +106,7 @@ class ProductsController extends Controller
             'unit_price_1' => 'required',
             'range_1_min' => 'required',
             'range_1_max' => 'required',
+            'shipping_price' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         $image_name = time().'-'.$request->name.'.'.$request->image->extension();
@@ -122,6 +128,7 @@ class ProductsController extends Controller
         $product->range_2_max = $request->range_2_max;
         $product->range_3_max = $request->range_3_max;
         $product->range_4_max = $request->range_4_max;
+        $product->shipping_price = $request->shipping_price;
         $product->image = $image_name;
         $product->save();
         return redirect()->back()->with('success', 'Product updated successfully');

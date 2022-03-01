@@ -8,11 +8,14 @@
     <div class="mt-5">
         <ul class="flex flex-col gap-2 px-4">
             @foreach ($messages as $message)
-            <li class="bg-gray-200 rounded p-2">
+            <li class="rounded p-2 @if($message->from === auth()->user()->id) bg-green-200 @else bg-gray-200 @endif">
                 <a href="{{route('showMessage',['id'=>$message->id])}}" class="flex flex-row justify-between items-center">
+                    @php
+                        $sender = App\Models\User::find($message->from);
+                    @endphp
                     <div>
                         <h1>{{$message->subject}}</h1>
-                        <p>{{$message->user->first_name}} {{$message->user->last_name}}</p>
+                        <p>From: {{$sender->username}}</p>
                     </div>
                     <p>{{$message->created_at}}</p>
                 </a>

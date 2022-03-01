@@ -7,7 +7,16 @@
     <div class="overflow-x-auto w-full">
         <div class="inline-block py-2 px-0 min-w-full sm:px-6 lg:px-8">
             <div class="overflow-hidden shadow-md w-full sm:rounded-lg">
+                <form class="mb-2" action="{{route('orderSortBy')}}" method="GET">
+                    <select class="p-4 rounded-lg border-2" name="sortBy" id="sortBy">
+                        <option value="">Sort By</option>
+                        <option value="pending" @if($sort && $sort=="pending") selected @endif>Pending</option>
+                        <option value="completed" @if($sort && $sort=="completed") selected @endif>Completed</option>
+                    </select>
+                </form>
+                
                 @if(count($orders) > 0)
+                
                 <table class="w-full">
                     <thead class="bg-gray-100 dark:bg-gray-700">
                         <tr>
@@ -57,10 +66,13 @@
                                     <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                         {{$order->status}}
                                     </td>
-                                    <td class="py-4 px-6 text-sm font-medium text-center whitespace-nowrap">
-                                        <a href="{{route('completeOrder', ['id' => $order->id])}}" class="text-blue-600 dark:text-blue-500 hover:underline">Done</a><br>
-                                        <a href="#" class="text-red-600 dark:text-red-500 hover:underline">Cancel</a>
-                                    </td>
+                                    @if ($order->status == 'pending')
+                                        <td class="py-4 px-6 text-sm font-medium text-center whitespace-nowrap">
+                                            <a href="{{route('completeOrder', ['id' => $order->id])}}" class="text-blue-600 dark:text-blue-500 hover:underline">Done</a><br>
+                                            <a href="#" class="text-red-600 dark:text-red-500 hover:underline">Cancel</a>
+                                        </td>
+                                    @endif
+                                    
                                 </div>
                             </tr>
                         @endforeach
@@ -73,4 +85,11 @@
         </div>
     </div>
 </div>
+
+<script>
+    sorter = document.getElementById('sortBy');
+    sorter.addEventListener('change', function() {
+        this.form.submit();
+    });
+</script>
 @endsection

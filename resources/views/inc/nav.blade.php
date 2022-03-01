@@ -13,7 +13,7 @@
         </a>
     </div>
     
-        <form action="#" method="GET" class="border-2 rounded-3xl px-6 py-2 sm:mx-4 my-4 sm:my-0 sm:w-3/6 w-full flex flex-initial justify-between">
+        <form action="{{route('search')}}" method="GET" class="border-2 rounded-3xl px-6 py-2 sm:mx-4 my-4 sm:my-0 sm:w-3/6 w-full flex flex-initial justify-between">
             <input type="text" name="search" placeholder="Search..." class="w-full focus:outline-none">
             <button type="submit" class="justify-end">
                 <svg class="text-gray-600 h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg"
@@ -135,6 +135,9 @@
           @if (Auth::user()->user_type!='buyer')
           <a href="{{route('dashboard')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-300" role="menuitem" tabindex="-1">Dashboard</a>
           @endif
+          @if (Auth::user()->user_type=='buyer')
+          <a href="{{route('messages')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-300" role="menuitem" tabindex="-1">Messages</a>
+          @endif
           <form action="{{route('logout')}}" method="POST">
             @csrf
             <button type="submit" class="w-full text-left block px-4 py-2 text-sm text-red-400 hover:bg-gray-300" role="menuitem" tabindex="-1">Logout</button>
@@ -160,7 +163,12 @@
         
         <ul id="profile-menu" class="hidden flex flex-col">
             <a href="{{route('profile')}}" class="p-2">Your Profile</a>
+            @if (Auth::user()->user_type!='buyer')
             <a href="{{route('dashboard')}}" class="p-2">Dashboard</a>
+            @endif
+            @if (Auth::user()->user_type=='buyer')
+            <a href="{{route('messages')}}" class="p-2">Messages</a>
+            @endif
             <form action="{{ route('logout') }}" method="POST" class="p-2">
               @csrf
               <button type="submit" class="w-full text-left text-red-400 hover:bg-gray-300" role="menuitem" tabindex="-1">Logout</button>

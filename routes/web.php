@@ -31,12 +31,14 @@ Route::post('/login', [LoginController::class, 'store'])->middleware('guest');
 Route::post('/logout', [LogoutController::class, 'store'])->name('logout')->middleware('auth');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/search', [HomeController::class, 'search'])->name('search');
 Route::get('/filter', [HomeController::class, 'filter'])->name('applyFilter');
+Route::get('/sort', [HomeController::class, 'sort'])->name('applySort');
 
 
 Route::get('/store/{id}', [StoresController::class, 'show'])->name('showStore');
-Route::get('/seller/store/create', [StoresController::class, 'create'])->name('createStore')->middleware('auth');
-Route::post('/seller/store/save', [StoresController::class, 'save'])->name('saveStore')->middleware('auth');
+Route::get('/seller/store/create', [StoresController::class, 'create'])->name('createStore')->middleware('auth', 'checkUserType:seller');
+Route::post('/seller/store/save', [StoresController::class, 'save'])->name('saveStore')->middleware('auth', 'checkUserType:seller');
 Route::get('/stores', [StoresController::class, 'index'])->name('stores');
 
 Route::get('/profile', [UsersController::class, 'show'])->name('profile')->middleware('auth');
@@ -47,6 +49,7 @@ Route::post('/profile/address', [AddressController::class, 'store'])->name('upda
 Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist')->middleware('auth');
 
 Route::get('/orders', [OrderController::class, 'index'])->name('orders')->middleware('auth');
+Route::get('orders/sort', [OrderController::class, 'orders_sort'])->name('orderSortByBuyer')->middleware('auth');
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart')->middleware('auth');
 Route::get('/cart/{id}', [CartController::class, 'destroy'])->name('deleteCart')->middleware('auth');
@@ -73,6 +76,7 @@ Route::post('/seller/products/{id}/update', [ProductsController::class, 'update'
 Route::get('/seller/products/{id}', [ProductsController::class, 'destroy'])->name('deleteProduct')->middleware('auth', 'checkUserType:seller');
 
 Route::get('/seller-dashboard/orders', [OrderController::class, 'dash_orders'])->name('dashboard.orders')->middleware('auth', 'checkUserType:seller');
+Route::get('/seller-dashboard/orders/sort', [OrderController::class, 'dash_orders_sort'])->name('orderSortBy')->middleware('auth', 'checkUserType:seller');
 Route::get('/seller-dashboard/orders/{id}/complete', [OrderController::class, 'complete'])->name('completeOrder')->middleware('auth', 'checkUserType:seller');
 
 Route::get('/seller-dashboard/earnings', [EarningsController::class, 'index'])->name('dashboard.earnings')->middleware('auth', 'checkUserType:seller');
@@ -90,6 +94,8 @@ Route::post('/sendMessage', [MessagesController::class, 'sendMessage'])->name('s
 Route::get('/messages', [MessagesController::class, 'index'])->name('messages')->middleware('auth');
 Route::get('/seller/messages', [MessagesController::class, 'dash_index'])->name('dashboard.messages')->middleware('auth', 'checkUserType:seller');
 Route::get('/seller/messages/{id}', [MessagesController::class, 'show'])->name('showMessage')->middleware('auth', 'checkUserType:seller');
+Route::get('/messages/{id}', [MessagesController::class, 'showBuyer'])->name('showMessageBuyer')->middleware('auth');
+Route::get('/seller/messages/{id}/reply', [MessagesController::class, 'reply'])->name('reply')->middleware('auth', 'checkUserType:seller');
 
 
 
