@@ -2,16 +2,12 @@
 @section('dash_content')
 <div class="flex flex-col w-full p-0 sm:mt-10">
     <p class="w-full text-center text-emerald-600">
-        {{session('success')}}
+        {{session('status')}}
     </p>
     <div>
-        @php
-            $sender = App\Models\User::find($message->from);
-            $recipient = App\Models\User::find($message->to);
-        @endphp
         <h1>Subject: {{$message->subject}}</h1>
         <p>Body: {{$message->body}}</p>
-        <p>From: {{$sender->first_name}} {{$sender->last_name}}</p>
+        <p>From: {{$user->first_name}} {{$user->last_name}}</p>
         <p>To: {{$recipient->first_name}} {{$recipient->last_name}}</p>
         <p>Sent: {{$message->created_at}}</p>
     </div>

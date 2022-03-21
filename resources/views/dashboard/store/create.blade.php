@@ -39,7 +39,7 @@
                     <label class="block text-sm font-medium text-gray-700"> Store Photo </label>
                     <div class="mt-1 flex items-center gap-4">
                         <span class="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-200">
-                            <img class="rounded-circle w-full h-full" src="{{asset('images/store_images/null.png')}}">
+                            <img class="rounded-circle w-full h-full">
                         </span>
                         <input id="choose-file" type="file" name="image" accept=".jpg, .jpeg, .png, .gif, .svg" hidden>
                         <button onClick="showChooser()" type="button" class="w-20 border-2 rounded-lg hover:bg-gray-200 p-2">Change</button>
@@ -50,7 +50,7 @@
                     <label class="block text-sm font-medium text-gray-700"> Store Banner </label>
                     <div class="mt-1 flex items-center gap-4">
                         <span class="inline-block h-12 w-40 overflow-hidden bg-gray-200">
-                            <img class="rounded-lg w-full h-full" src="{{asset('images/store_banners/null.png')}}" alt="">
+                            <img class="rounded-lg w-full h-full" alt="">
                         </span>
                         <input id="choose-banner" type="file" name="banner_image" accept=".jpg, .jpeg, .png, .gif, .svg" hidden>
                         <button id="banner_btn" type="button" class="w-20 border-2 rounded-lg hover:bg-gray-200 p-2">Change</button>

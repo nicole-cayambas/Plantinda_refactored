@@ -42,7 +42,12 @@
                                     <input type="number" name="cart_id" value="{{$cart_item->id}}" hidden>
                                     <input type="radio" name="from_cart" checked hidden>
                                     <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        {{$cart_item->product->name}} <br> <br> <img src="{{$cart_item->product->image}}" alt="{{$cart_item->product->name}} picture" width="100px" height="100px">
+                                        {{$cart_item->product->name}} <br> <br> 
+                                        @if (!str_starts_with($cart_item->product->image, 'http'))
+                                            <img src="{{asset('images/products/'.$cart_item->product->image)}}" width="100px" height="100px">
+                                        @else
+                                            <img src="{{$cart_item->product->image}}" width="100px" height="100px">
+                                        @endif
                                     </td>
                                     <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                         {{$cart_item->quantity}} x Php {{number_format($cart_item->unit_price, 2)}}

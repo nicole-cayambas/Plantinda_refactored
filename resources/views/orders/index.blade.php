@@ -64,7 +64,12 @@
                                         {{$order->status}}
                                     </td>
                                     <td class="py-4 px-6 text-sm font-medium text-center whitespace-nowrap">
-                                        {{-- <a href="{{route('editCartItem'), ['id', $product->id]}}" class="text-blue-600 dark:text-blue-500 hover:underline">Edit</a><br> --}}
+                                        
+                                        @if ($order->status != "completed")
+                                        <a href="{{route('completeOrder', ['id' => $order->id])}}" class="text-blue-600 dark:text-blue-500 hover:underline">Received</a><br>
+                                        @else 
+                                        <a href="{{route('uncompleteOrder', ['id' => $order->id])}}" class="text-blue-600 dark:text-blue-500 hover:underline">Undo Complete</a><br>
+                                        @endif
                                         {{-- <a href="#" class="text-red-600 dark:text-red-500 hover:underline">Cancel</a> --}}
                                     </td>
                                 </div>

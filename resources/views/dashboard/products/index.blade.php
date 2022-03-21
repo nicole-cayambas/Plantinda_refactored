@@ -11,7 +11,7 @@
         @foreach ($products as $product)
             <div class="bg-white shadow-md p-8 rounded-lg">
                 <div class="w-full flex flex-col sm:flex-row gap-4">
-                    @if (!str_starts_with($product->image, 'https://via.placeholder'))
+                    @if (!str_starts_with($product->image, 'http'))
                         <div class="w-full sm:w-1/6">
                             <img src="{{asset('images/products/'.$product->image)}}" alt="{{ $product->name }}" class="w-full rounded-md">
                         </div>

@@ -43,6 +43,12 @@ class AdminController extends Controller
         return view('admin.sellers', ['sellers' => $sellers]);
     }
 
+    public function destroyUser($id){
+        $user = User::find($id);
+        $user->delete();
+        return redirect()->back()->with('status', 'User deleted successfully');
+    }
+
     public function buyers()
     {
         $buyers = User::where('user_type', 'buyer')->orderBy('id', 'desc')->paginate(10);

@@ -13,7 +13,7 @@
             <label for="seller_email">Send To</label>
             <input type="text" name="seller_email" id="seller_email" value="{{$seller->email}}" class="p-2 focus:outline-none focus:bg-gray-100 border-2 w-full" readonly>
             <input type="text" name="store_name" id="store_name" value="{{$store->name}}" class="p-2 focus:outline-none focus:bg-gray-100 border-2 w-full" readonly>
-            <input type="number" name="to" value="{{$store->id}}" hidden>
+            <input type="number" name="to" value="{{$seller->id}}" hidden>
             <input type="number" name="from" value="{{auth()->user()->id}}" hidden>
         </div>
         <div>

@@ -4,11 +4,12 @@
     <div class="w-full px-2 py-6">
         <h1 class="font-semibold text-lg">Edit Product</h1>
         <p class="w-full text-center text-emerald-600">
-            {{session('success')}}
+            {{session('status')}}
         </p>
     </div>
-    <form action="{{route('updateProduct', ['id' => $product->id])}}" method="POST" enctype="multipart/form-data" class="w-full sm:w-11/12 flex flex-col gap-4">
+    <form action="{{route('updateProduct')}}" method="POST" enctype="multipart/form-data" class="w-full sm:w-11/12 flex flex-col gap-4">
         @csrf
+        <input type="number" name="product_id" value="{{$product->id}}" hidden>
         <div class="grid grid-cols-3 flex items-center">
             <label for="name">Product Name</label>
             <input type="text" name="name" id="name" value="{{$product->name}}" class="col-span-2 p-2 rounded border-2 focus:outline-0">
@@ -53,15 +54,19 @@
             <label for="range_4_max">Max Quantity</label>
             <input type="number" name="range_4_max" id="range_4_max" value="{{$product->range_4_max}}" class="p-2 rounded border-2 focus:outline-0">
         </div>
+        <div>
+            <label for="shipping_price">Shipping (Base price)</label>
+            <input type="number" name="shipping_price" id="shipping_price" value="{{$product->shipping_price}}" class="p-2 rounded border-2 focus:outline-0">
+        </div>
         <div class="flex items-center justify-start gap-1">
             <div>
                 <label class="block text-sm font-medium text-gray-700"> Photo </label>
                 <div class="mt-1 flex items-center">
                   <span class="inline-block h-12 w-20 rounded-lg overflow-hidden bg-gray-100">
-                    @if (!str_starts_with($product->image, 'https://via.placeholder'))
+                    @if (!str_starts_with($product->image, 'http') && $product->image != null)
                         <img src="{{asset('images/products/'.$product->image)}}" alt="">
-                    @else
-                        <img src="{{asset('images/products/null.png')}}" alt="">
+                    @else if(str_starts_with($product->image, 'http'))
+                        <img src="{{$product->image}}" alt="">
                     @endif
                   </span>
                   <input type="file" name="image" id="image" accept=".jpg, .jpeg, .png, .gif, .svg" hidden>

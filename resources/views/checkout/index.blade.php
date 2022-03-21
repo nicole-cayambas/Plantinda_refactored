@@ -75,7 +75,12 @@
                     <div class="mt-8">
                       <div class="flex space-x-4">
                         <div>
-                          <img src="{{$product->image}}" class="w-60">
+                          @if (!str_starts_with($product->image, 'http'))
+                              <img src="{{asset('images/products/'.$product->image)}}" class="w-60">
+                          @else
+                              <img src="{{$product->image}}" class="w-60">
+                          @endif
+                          {{-- <img src="{{$product->image}}" class="w-60"> --}}
                         </div>
                         <div class="w-full">
                           <h2 class="text-xl font-bold">{{$product->name}}</h2>

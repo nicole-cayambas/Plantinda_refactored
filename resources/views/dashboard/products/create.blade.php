@@ -11,34 +11,34 @@
         @csrf
         <div class="grid grid-cols-3 flex items-center">
             <label for="name">Product Name</label>
-            <input type="text" name="name" id="name" class="col-span-2 p-2 rounded border-2 focus:outline-0">
+            <input type="text" name="name" id="name" value="{{ old('name') }}" class="col-span-2 p-2 rounded border-2 focus:outline-0">
         </div>
         @error('name')
             <p class="text-red-500 text-xs italic">{{$message}}</p>
         @enderror
         <div class="grid grid-cols-3 flex items-center">
             <label for="summary">Summary</label>
-            <input type="text" name="summary" id="summary" class="col-span-2 p-2 rounded border-2 focus:outline-0">
+            <input type="text" name="summary" id="summary" value="{{ old('summary') }}" class="col-span-2 p-2 rounded border-2 focus:outline-0">
         </div>
         @error('summary')
             <p class="text-red-500 text-xs italic">{{$message}}</p>
         @enderror
         <div class="grid grid-cols-3 flex items-center">
             <label for="description">Description</label>
-            <input type="textarea" name="description" id="description" class="col-span-2 p-2 rounded border-2 focus:outline-0">
+            <input type="textarea" name="description" id="description" value="{{ old('description') }}" class="col-span-2 p-2 rounded border-2 focus:outline-0">
         </div>
         @error('description')
             <p class="text-red-500 text-xs italic">{{$message}}</p>
         @enderror
         <div class="grid grid-cols-6 flex items-center justify-start gap-1">
             <label for="price1">Unit Price</label>
-            <input type="number" name="unit_price_1" id="price1" class="p-2 rounded border-2 focus:outline-0">
+            <input type="number" name="unit_price_1" id="price1" value="{{ old('unit_price_1') }}" class="p-2 rounded border-2 focus:outline-0">
             
             <label for="range_1_min">Min Quantity</label>
-            <input type="number" name="range_1_min" id="range_1_min" class="p-2 rounded border-2 focus:outline-0">
+            <input type="number" name="range_1_min" id="range_1_min" value="{{ old('range_1_min') }}" class="p-2 rounded border-2 focus:outline-0">
             
             <label for="range_1_max">Max Quantity</label>
-            <input type="number" name="range_1_max" id="range_1_max" class="p-2 rounded border-2 focus:outline-0">
+            <input type="number" name="range_1_max" id="range_1_max" value="{{ old('range_1_max') }}" class="p-2 rounded border-2 focus:outline-0">
             
         </div>
         @error('unit_price_1')
@@ -53,32 +53,35 @@
         
         <div class="grid grid-cols-6 flex items-center justify-start gap-1">
             <label for="price2">Unit Price</label>
-            <input type="number" name="unit_price_2" id="price2" class="p-2 rounded border-2 focus:outline-0">
+            <input type="number" name="unit_price_2" id="price2" value="{{ old('unit_price_2') }}" class="p-2 rounded border-2 focus:outline-0">
             <label for="range_2_min">Min Quantity</label>
-            <input type="number" name="range_2_min" id="range_2_min" class="p-2 rounded border-2 focus:outline-0">
+            <input type="number" name="range_2_min" id="range_2_min" value="{{ old('range_2_min') }}" class="p-2 rounded border-2 focus:outline-0">
             <label for="range_2_max">Max Quantity</label>
-            <input type="number" name="range_2_max" id="range_2_max" class="p-2 rounded border-2 focus:outline-0">
+            <input type="number" name="range_2_max" id="range_2_max" value="{{ old('range_2_max') }}" class="p-2 rounded border-2 focus:outline-0">
         </div>
         <div class="grid grid-cols-6 flex items-center justify-start gap-1">
             <label for="price3">Unit Price</label>
-            <input type="number" name="unit_price_3" id="price3" class="p-2 rounded border-2 focus:outline-0">
+            <input type="number" name="unit_price_3" id="price3" value="{{ old('unit_price_3') }}" class="p-2 rounded border-2 focus:outline-0">
             <label for="range_3_min">Min Quantity</label>
-            <input type="number" name="range_3_min" id="range_3_min" class="p-2 rounded border-2 focus:outline-0">
+            <input type="number" name="range_3_min" id="range_3_min" value="{{ old('range_3_min') }}" class="p-2 rounded border-2 focus:outline-0">
             <label for="range_3_max">Max Quantity</label>
-            <input type="number" name="range_3_max" id="range_3_max" class="p-2 rounded border-2 focus:outline-0">
+            <input type="number" name="range_3_max" id="range_3_max" value="{{ old('range_3_max') }}" class="p-2 rounded border-2 focus:outline-0">
         </div>
         <div class="grid grid-cols-6 flex items-center justify-start gap-1">
             <label for="price4">Unit Price</label>
-            <input type="number" name="unit_price_4" id="price4" class="p-2 rounded border-2 focus:outline-0">
+            <input type="number" name="unit_price_4" id="price4" value="{{ old('unit_price_4') }}" class="p-2 rounded border-2 focus:outline-0">
             <label for="range_4_min">Min Quantity</label>
-            <input type="number" name="range_4_min" id="range_4_min" class="p-2 rounded border-2 focus:outline-0">
+            <input type="number" name="range_4_min" id="range_4_min" value="{{ old('range_4_min') }}" class="p-2 rounded border-2 focus:outline-0">
             <label for="range_4_max">Max Quantity</label>
-            <input type="number" name="range_4_max" id="range_4_max" class="p-2 rounded border-2 focus:outline-0">
+            <input type="number" name="range_4_max" id="range_4_max" value="{{ old('range_4_max') }}" class="p-2 rounded border-2 focus:outline-0">
         </div>
         <div>
             <label for="shipping_price">Shipping (Base price)</label>
-            <input type="number" name="shipping_price" id="shipping_price" class="p-2 rounded border-2 focus:outline-0">
+            <input type="number" name="shipping_price" id="shipping_price" value="{{ old('shipping_price') }}" class="p-2 rounded border-2 focus:outline-0">
         </div>
+        @error('shipping_price')
+            <p class="text-red-500 text-xs italic">{{$message}}</p>
+        @enderror
         <div class="flex items-center justify-start gap-2">
             <label class="block text-sm font-medium text-gray-700"> Photo </label>
             <input type="file" name="image" id="image" accept=".jpg, .jpeg, .png, .gif, .svg" hidden>

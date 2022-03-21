@@ -9,7 +9,7 @@ class OrderController extends Controller
 {
     public function index(){
         return view('orders.index', [
-            'orders' => auth()->user()->order()->orderBy('updated_at', 'desc')->get(),
+            'orders' => auth()->user()->order()->withTrashed()->orderBy('updated_at', 'desc')->get(),
             'sort' => null,
         ]);
     }
@@ -57,11 +57,48 @@ class OrderController extends Controller
         
     }
 
+    public function dash_complete($id){
+        $order = auth()->user()->store->order()->find($id);
+        $order->status = 'completed';
+        $order->save();
+        $order->delete();
+        return redirect()->back()->with('status', 'Order has been completed');
+    }
+
+    public function dash_cancel($id){
+        $order = auth()->user()->store->order()->find($id);
+        $order->status = 'cancelled';
+        $order->save();
+        $order->delete();
+        return redirect()->back()->with('status', 'Order has been cancelled');
+    }
+
+    public function dash_uncomplete($id){
+        $order = auth()->user()->store->order()->withTrashed()->find($id);
+        $order->restore();
+        $order->status = 'pending';
+        $order->save();
+        return redirect()->back();
+
+    }
+
     public function complete($id){
-        $order = auth()->user()->store->order->find($id);
+        // if(auth()->user()->user_type == 'seller' || auth()->user()->user_type == 'admin'){
+        //     $order = auth()->user()->store->order->find($id);
+        // } else {
+            $order = auth()->user()->order->find($id);
+        // }
         $order->status = 'completed';
         $order->save();
         $order->delete();
         return redirect()->back()->with('success', 'Order has been completed');
+    }
+
+    public function uncomplete($id){
+        $order = auth()->user()->order()->withTrashed()->find($id);
+        $order->restore();
+        $order->status = 'pending';
+        $order->save();
+        return redirect()->back();
     }
 }

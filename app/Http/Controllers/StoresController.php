@@ -67,7 +67,7 @@ class StoresController extends Controller
                 'main_markets' => $request->main_markets,
             ]);
 
-            return redirect()->back()->with('status', 'Store created successfully');
+            return view('dashboard.store.edit')->with('store', auth()->user()->store)->with('status', 'Store created successfully');
         }
         else {
             $image_name = auth()->user()->store->image;

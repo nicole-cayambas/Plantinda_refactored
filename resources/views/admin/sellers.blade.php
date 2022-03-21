@@ -2,6 +2,9 @@
 @section('admin_content')
 @auth
 <div class="flex flex-col w-full p-2">
+    <p class="mt-2 w-full text-center text-emerald-600">
+        {{session('status')}}
+    </p> 
     <table class="w-full">
         <thead class="bg-gray-100 dark:bg-gray-700">
             <tr>
@@ -27,13 +30,13 @@
                             {{ $seller->id }}
                         </td>
                         <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                            {{$seller->store->name}}
+                            @if ($seller->store) {{$seller->store->name}} @else No store yet. @endif
                         </td>
                         <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                             {{$seller->first_name}} {{$seller->last_name}}
                         </td>
                         <td class="py-4 px-6 text-sm font-medium text-center whitespace-nowrap">
-                            <a href="#" class="text-red-600 dark:text-red-500 hover:underline">Delete</a>
+                            <a href="{{route('deleteUser', ['id' => $seller->id])}}" class="text-red-600 dark:text-red-500 hover:underline">Delete</a>
                         </td>
                     </div>
                 </tr>

@@ -68,8 +68,12 @@
                                     </td>
                                     @if ($order->status == 'pending')
                                         <td class="py-4 px-6 text-sm font-medium text-center whitespace-nowrap">
-                                            <a href="{{route('completeOrder', ['id' => $order->id])}}" class="text-blue-600 dark:text-blue-500 hover:underline">Done</a><br>
-                                            <a href="#" class="text-red-600 dark:text-red-500 hover:underline">Cancel</a>
+                                            <a href="{{route('dash_completeOrder', ['id' => $order->id])}}" class="text-blue-600 dark:text-blue-500 hover:underline">Done</a><br>
+                                            <a href="{{route('dash_cancelOrder', ['id' => $order->id])}}" class="text-red-600 dark:text-red-500 hover:underline">Cancel</a>
+                                        </td>
+                                    @elseif ($order->status == 'completed')
+                                        <td class="py-4 px-6 text-sm font-medium text-center whitespace-nowrap">
+                                            <a href="{{route('dash_uncompleteOrder', ['id' => $order->id])}}" class="text-red-600 dark:text-red-500 hover:underline">Undo Complete</a>
                                         </td>
                                     @endif
                                     

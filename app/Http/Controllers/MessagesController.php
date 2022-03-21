@@ -11,7 +11,7 @@ use App\Models\User;
 class MessagesController extends Controller
 {
     public function index(){
-        $messages = Message::where('from', auth()->user()->id)->get();
+        $messages = Message::where('from', auth()->user()->id)->orWhere('to', auth()->user()->id)->orderBy('created_at', 'desc')->get();
         // dd($messages);
         return view('message.index', [
             'messages' => $messages,
@@ -23,7 +23,7 @@ class MessagesController extends Controller
         if(!auth()->user()->store){
             return redirect()->route('createStore')->with('status', 'You need to create a store first');
         }
-        $messages = Message::where('to', auth()->user()->store->id)->orWhere('from', auth()->user()->store->id)->orWhere('from', auth()->user()->id)->orWhere('from', auth()->user()->id)->orderBy('created_at', 'desc')->paginate(20);
+        $messages = Message::where('to', auth()->user()->id)->orWhere('from', auth()->user()->id)->orWhere('from', auth()->user()->id)->orWhere('from', auth()->user()->id)->orderBy('created_at', 'desc')->paginate(20);
         // dd($messages);
         return view('dashboard.messages.index', [
             'messages' => $messages,
@@ -35,6 +35,7 @@ class MessagesController extends Controller
         return view('dashboard.messages.show', [
             'message' => $message,
             'user' => User::find($message->from),
+            'recipient' => User::find($message->to),
         ]);
     }
 
@@ -42,7 +43,8 @@ class MessagesController extends Controller
         $message = Message::find($id);
         return view('message.show', [
             'message' => $message,
-            'user' => User::find($message->from)
+            'user' => User::find($message->from),
+            'recipient' => User::find($message->to),
         ]);
     }
 

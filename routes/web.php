@@ -72,12 +72,16 @@ Route::get('/seller/products', [ProductsController::class, 'dash_index'])->name(
 Route::get('/seller/products/create', [ProductsController::class, 'create'])->name('createProduct')->middleware('auth', 'checkUserType:seller');
 Route::get('/seller/products/{id}/edit', [ProductsController::class, 'edit'])->name('editProduct')->middleware('auth', 'checkUserType:seller');
 Route::post('/seller/products/save', [ProductsController::class, 'store'])->name('saveProduct')->middleware('auth', 'checkUserType:seller');
-Route::post('/seller/products/{id}/update', [ProductsController::class, 'update'])->name('updateProduct')->middleware('auth', 'checkUserType:seller');
+Route::post('/seller/products/update', [ProductsController::class, 'update'])->name('updateProduct')->middleware('auth', 'checkUserType:seller');
 Route::get('/seller/products/{id}', [ProductsController::class, 'destroy'])->name('deleteProduct')->middleware('auth', 'checkUserType:seller');
 
 Route::get('/seller-dashboard/orders', [OrderController::class, 'dash_orders'])->name('dashboard.orders')->middleware('auth', 'checkUserType:seller');
 Route::get('/seller-dashboard/orders/sort', [OrderController::class, 'dash_orders_sort'])->name('orderSortBy')->middleware('auth', 'checkUserType:seller');
-Route::get('/seller-dashboard/orders/{id}/complete', [OrderController::class, 'complete'])->name('completeOrder')->middleware('auth', 'checkUserType:seller');
+Route::get('seller-dashboard/orders/{id}/complete', [OrderController::class, 'dash_complete'])->name('dash_completeOrder')->middleware('auth');
+Route::get('seller-dashboard/orders/{id}/cancel', [OrderController::class, 'dash_cancel'])->name('dash_cancelOrder')->middleware('auth');
+Route::get('seller-dashboard/orders/{id}/uncomplete', [OrderController::class, 'dash_uncomplete'])->name('dash_uncompleteOrder')->middleware('auth');
+Route::get('/orders/{id}/complete', [OrderController::class, 'complete'])->name('completeOrder')->middleware('auth');
+Route::get('/orders/{id}/uncomplete', [OrderController::class, 'uncomplete'])->name('uncompleteOrder')->middleware('auth');
 
 Route::get('/seller-dashboard/earnings', [EarningsController::class, 'index'])->name('dashboard.earnings')->middleware('auth', 'checkUserType:seller');
 Route::get('/seller-dashboard/store', [StoresController::class, 'dash_store'])->name('dashboard.store')->middleware('auth', 'checkUserType:seller');
@@ -88,6 +92,7 @@ Route::get('/admin/sellers', [AdminController::class, 'sellers'])->name('admin.s
 Route::get('/admin/buyers', [AdminController::class, 'buyers'])->name('admin.buyers')->middleware('auth');
 Route::get('/admin/orders', [AdminController::class, 'orders'])->name('admin.orders')->middleware('auth');
 Route::get('/admin/stores', [AdminController::class, 'stores'])->name('admin.stores')->middleware('auth');
+Route::get('/admin/user/{id}/delete', [AdminController::class, 'destroyUser'])->name('deleteUser')->middleware('auth');
 
 Route::get('products/{id}/contactSeller', [MessagesController::class, 'contactSeller'])->name('contactSeller')->middleware('auth');
 Route::post('/sendMessage', [MessagesController::class, 'sendMessage'])->name('sendMessage')->middleware('auth');

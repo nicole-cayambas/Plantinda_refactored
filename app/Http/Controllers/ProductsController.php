@@ -49,7 +49,7 @@ class ProductsController extends Controller
 
     public function destroy($id){
         $product = auth()->user()->store->products->find($id)->delete();
-        return redirect()->back()->with('success', 'Product deleted successfully');
+        return redirect()->back()->with('status', 'Product deleted successfully');
     }
 
     public function create(){
@@ -69,12 +69,12 @@ class ProductsController extends Controller
             'range_1_min' => 'required',
             'range_1_max' => 'required',
             'shipping_price' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
 
         $image_name = time().'-'.$request->name.'.'.$request->image->extension();
         $request->image->move(public_path('images/products'), $image_name);
-        
+
         $product = auth()->user()->store->products()->create([
             'name' => $request->name,
             'description' => $request->description,
@@ -98,7 +98,7 @@ class ProductsController extends Controller
         return redirect()->route('dashboard.products')->with('success', 'Product created successfully');
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request){
         $this->validate($request, [
             'name' => 'required',
             'description' => 'required',
@@ -107,12 +107,16 @@ class ProductsController extends Controller
             'range_1_min' => 'required',
             'range_1_max' => 'required',
             'shipping_price' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg',
         ]);
-        $image_name = time().'-'.$request->name.'.'.$request->image->extension();
-        $request->image->move(public_path('images/products'), $image_name);
+        
+        if($request->image){
+            $image_name = time().'-'.$request->name.'.'.$request->image->extension();
+            $request->image->move(public_path('images/products'), $image_name);
+        }
 
-        $product = auth()->user()->store->products->find($id);
+        $product = auth()->user()->store->products->find($request->product_id);
+
         $product->name = $request->name;
         $product->description = $request->description;
         $product->summary = $request->summary;
@@ -129,7 +133,9 @@ class ProductsController extends Controller
         $product->range_3_max = $request->range_3_max;
         $product->range_4_max = $request->range_4_max;
         $product->shipping_price = $request->shipping_price;
-        $product->image = $image_name;
+        if($request->image){
+            $product->image = $image_name;
+        }
         $product->save();
         return redirect()->back()->with('success', 'Product updated successfully');
     }
