@@ -58,6 +58,10 @@
             <label for="shipping_price">Shipping (Base price)</label>
             <input type="number" name="shipping_price" id="shipping_price" value="{{$product->shipping_price}}" class="p-2 rounded border-2 focus:outline-0">
         </div>
+        <div>
+            <label for="num_units">Number of Units Available</label>
+            <input type="number" name="num_units" id="num_units" value="{{$product->num_units}}" class="p-2 rounded border-2 focus:outline-0">
+        </div>
         <div class="flex items-center justify-start gap-1">
             <div>
                 <label class="block text-sm font-medium text-gray-700"> Photo </label>
@@ -65,7 +69,7 @@
                   <span class="inline-block h-12 w-20 rounded-lg overflow-hidden bg-gray-100">
                     @if (!str_starts_with($product->image, 'http') && $product->image != null)
                         <img src="{{asset('images/products/'.$product->image)}}" alt="">
-                    @else if(str_starts_with($product->image, 'http'))
+                    @else
                         <img src="{{$product->image}}" alt="">
                     @endif
                   </span>

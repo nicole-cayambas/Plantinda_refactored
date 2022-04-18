@@ -16,6 +16,8 @@ class Store extends Model
         'main_products',
         'main_markets',
         'user_id',
+        'permit',
+        'fb',
     ];
 
     public function user()

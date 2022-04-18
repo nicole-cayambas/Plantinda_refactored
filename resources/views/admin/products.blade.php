@@ -4,17 +4,18 @@
         <p class="w-full text-center text-emerald-600">
             {{session('success')}}
         </p>
-        <div class="flex justify-center px-4 sm:justify-start">
-            <a href="{{route('createProduct')}}" class="w-full sm:w-1/4 p-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white text-center bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 cursor-pointer">Add Product</a>
-        </div>
         @if (count($products) > 0)
         @foreach ($products as $product)
             <div class="bg-white shadow-md p-8 rounded-lg">
                 <div class="w-full flex flex-col sm:flex-row gap-4">
                     <div class="w-full sm:w-1/6">
-                        <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full rounded-md">
+                        @if (!str_starts_with($product->image, 'http'))
+                            <img src="{{asset('images/products/'.$product->image)}}" alt="{{ $product->name }}"  class="w-full rounded-md">
+                        @else
+                            <img src="{{$product->image}}" alt="{{ $product->name }}"  class="w-full rounded-md">
+                        @endif
                     </div>
-                    <h3 class="w-full sm:w-1/6 text-center"><a href="/products/{{$product->id}}" class="text-lg font-bold">{{$product->name}}</a></h3>
+                    <h3 class="w-full sm:w-1/6 text-center"><a href="/products/{{$product->id}}" class="text-lg font-bold">{{$product->name}}</a><br>Store: {{$product->store->name}}</h3>
                     <p class="w-full sm:w-1/6 text-sm">{{Str::limit($product->description, 120)}}</p>
                         <div class="w-full sm:w-1/6 text-center">
                             <p class="font-bold">Unit Price</p>
@@ -31,8 +32,7 @@
                             <p class="">{{$product->range_4_min}} - {{$product->range_4_max}}</p>
                         </div>
                     <div class="w-full sm:w-1/6 flex flex-col text-center gap-y-4">
-                        <a href="{{route('editProduct', ['id'=>$product->id])}}" class="w-full p-2 border-2 rounded-md">Edit</a>
-                        <form action="{{route('deleteProduct', $product)}}" method="get">
+                        <form action="{{route('adminDeleteProduct', ['id'=>$product->id])}}" method="get">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="w-full p-2 rounded-md text-white bg-red-500">Delete</button>

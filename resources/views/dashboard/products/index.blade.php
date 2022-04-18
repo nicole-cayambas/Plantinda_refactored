@@ -36,12 +36,13 @@
                             <p class="">{{$product->range_3_min}} - {{$product->range_3_max}}</p>
                             <p class="">{{$product->range_4_min}} - {{$product->range_4_max}}</p>
                         </div>
-                    <div class="w-full sm:w-1/6 flex flex-col text-center gap-y-4">
-                        <a href="{{route('editProduct', ['id'=>$product->id])}}" class="w-full p-2 border-2 rounded-md">Edit</a>
+                    <div class="w-full sm:w-1/6 flex flex-col text-center gap-y-2">
+                        <p><strong>Available Units:</strong> {{$product->num_units}}</p>
+                        <a href="{{route('editProduct', ['id'=>$product->id])}}" class="w-full p-1 border-2 rounded-md">Edit</a>
                         <form action="{{route('deleteProduct', $product)}}" method="get">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="w-full p-2 rounded-md text-white bg-red-500">Delete</button>
+                            <button type="submit" class="w-full p-1 rounded-md text-white bg-red-500">Delete</button>
                         </form>
                     </div>
                 </div>

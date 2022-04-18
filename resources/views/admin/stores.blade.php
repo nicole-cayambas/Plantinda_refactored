@@ -2,7 +2,7 @@
 @section('admin_content')
 <div class="flex flex-col w-full p-0 sm:mt-10">
     <p class="w-full text-center text-emerald-600">
-        {{session('success')}}
+        {{session('status')}}
     </p>
     <div class="overflow-x-auto w-full">
         <div class="inline-block py-2 px-0 min-w-full sm:px-6 lg:px-8">
@@ -19,6 +19,9 @@
                             </th>
                             <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                 Seller
+                            </th>
+                            <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                Permit
                             </th>
                             <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                 Certifications
@@ -40,7 +43,18 @@
                                         {{$store->user->first_name}} {{$store->user->last_name}}
                                     </td>
                                     <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                        {{$store->certifications}}
+                                        @if ($store->permit)
+                                            <button onclick='seePermit("{{$store->permit}}")' class="text-blue-500 underline">open</button>
+                                        @else
+                                            <span class="text-red-500">No</span>
+                                        @endif
+                                    </td>
+                                    <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+                                        @if ($store->certifications!="verified")
+                                            <a href="{{route('verifyStore', ['id'=>$store->id])}}" class="underline text-blue-500">verify</a>
+                                        @else
+                                            <p>{{$store->certifications}}</p>
+                                        @endif
                                     </td>
                                 </div>
                             </tr>
@@ -54,4 +68,10 @@
         </div>
     </div>
 </div>
+
+<script>
+    function seePermit(path){
+        window.open(`{{asset('images/store_permits/${path}')}}`, 'Image','width=largeImage.stylewidth,height=largeImage.style.height,resizable=1');
+    }
+</script>
 @endsection

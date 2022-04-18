@@ -69,6 +69,7 @@ class ProductsController extends Controller
             'range_1_min' => 'required',
             'range_1_max' => 'required',
             'shipping_price' => 'required',
+            'num_units' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
 
@@ -92,6 +93,7 @@ class ProductsController extends Controller
             'range_3_max' => $request->range_3_max,
             'range_4_max' => $request->range_4_max,
             'shipping_price' => $request->shipping_price,
+            'num_units' => $request->num_units,
             'image' => $image_name,
         ]);
         
@@ -133,6 +135,7 @@ class ProductsController extends Controller
         $product->range_3_max = $request->range_3_max;
         $product->range_4_max = $request->range_4_max;
         $product->shipping_price = $request->shipping_price;
+        $product->num_units = $request->num_units;
         if($request->image){
             $product->image = $image_name;
         }

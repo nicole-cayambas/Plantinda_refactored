@@ -48,6 +48,7 @@ class StoresController extends Controller
 
             $image_name = 'null.png';
             $banner_name = 'null.png';
+            $permit_name = 'null.jpg';
             
             if($request->image){
                 $image_name = time().'-'.$request->name.'.'.$request->image->extension();
@@ -57,14 +58,20 @@ class StoresController extends Controller
                 $banner_name = time().'-'.$request->name.'.'.$request->banner_image->extension();
                 $request->banner_image->move(public_path('images/store_banners'), $banner_name);
             }
+            if($request->permit){
+                $permit_name = time().'-'.$request->name.'.'.$request->permit->extension();
+                $request->permit->move(public_path('images/store_permits'), $permit_name);
+            }
 
             $request->user()->store()->create([
                 'name' => $request->name,
                 'description' => $request->description,
                 'image' => $image_name,
                 'banner_image' => $banner_name,
+                'permit' => $permit_name,
                 'main_products' => $request->main_products,
                 'main_markets' => $request->main_markets,
+                'fb' => $request->fb,
             ]);
 
             return view('dashboard.store.edit')->with('store', auth()->user()->store)->with('status', 'Store created successfully');
@@ -72,6 +79,7 @@ class StoresController extends Controller
         else {
             $image_name = auth()->user()->store->image;
             $banner_name = auth()->user()->store->banner_image;
+            $permit_name = auth()->user()->store->permit;
 
             if($request->image){
                 $image_name = time().'-'.$request->name.'.'.$request->image->extension();
@@ -81,13 +89,19 @@ class StoresController extends Controller
                 $banner_name = time().'-'.$request->name.'.'.$request->banner_image->extension();
                 $request->banner_image->move(public_path('images/store_banners'), $banner_name);
             }
+            if($request->permit){
+                $permit_name = time().'-'.$request->name.'.'.$request->permit->extension();
+                $request->permit->move(public_path('images/store_permits'), $permit_name);
+            }
             $request->user()->store->update([
                 'name' => $request->name,
                 'description' => $request->description,
                 'image' => $image_name,
                 'banner_image' => $banner_name,
+                'permit' => $permit_name,
                 'main_products' => $request->main_products,
                 'main_markets' => $request->main_markets,
+                'fb' => $request->fb,
             ]);
             return redirect()->back()->with('status', 'Store updated.');
         }
@@ -98,4 +112,12 @@ class StoresController extends Controller
     {
         return view('dashboard.store.edit')->with('store', auth()->user()->store);
     }
+
+    public function verifyStore($id){
+        $store = Store::find($id);
+        $store->certifications = "verified";
+        $store->save();
+        return redirect()->back()->with('status', 'Store verified.');
+    }
+
 }

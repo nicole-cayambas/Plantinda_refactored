@@ -43,6 +43,9 @@ class CheckoutController extends Controller
             $cart = auth()->user()->cart()->where('product_id', $request->product_id)->first();
             $cart->delete();
         }
+
+        $product->num_units -= $request->quantity;
+        $product->save();
         return view('checkout.invoice', [
             'order' => $order,
             'payment' => $payment,

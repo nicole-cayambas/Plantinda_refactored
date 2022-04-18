@@ -20,6 +20,7 @@
         <p>Delivery rate: <strong>{{$store->delivery_rate}}%</strong></p>
         <p>Number of transactions: <strong>{{$store->num_transactions}}</strong></p>
     </div>
+
     {{-- <div class="flex flex-col gap-2 sm:px-8 justify-center">
         <button class="bg-emerald-400 hover:bg-emerald-800 hover:text-white">Follow</button>
         <button class="border border-emerald-600 hover:bg-gray-200">Like</button>

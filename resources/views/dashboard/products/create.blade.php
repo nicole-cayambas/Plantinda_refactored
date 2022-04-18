@@ -82,6 +82,13 @@
         @error('shipping_price')
             <p class="text-red-500 text-xs italic">{{$message}}</p>
         @enderror
+        <div>
+            <label for="num_units">Number of Units Available</label>
+            <input type="number" name="num_units" id="num_units" value="{{ old('num_units')}}" class="p-2 rounded border-2 focus:outline-0">
+        </div>
+        @error('num_units')
+            <p class="text-red-500 text-xs italic">{{$message}}</p>
+        @enderror
         <div class="flex items-center justify-start gap-2">
             <label class="block text-sm font-medium text-gray-700"> Photo </label>
             <input type="file" name="image" id="image" accept=".jpg, .jpeg, .png, .gif, .svg" hidden>

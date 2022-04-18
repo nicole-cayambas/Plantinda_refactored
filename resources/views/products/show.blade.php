@@ -32,7 +32,7 @@
             <span class="text-gray-600 ml-3">{{$product->num_reviews}} Reviews</span>
           </span>
           <span class="flex ml-3 pl-3 py-2 border-l-2 border-gray-200">
-            <a class="text-gray-500">
+            <a href="{{$product->store->fb}}" class="text-gray-500">
               <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
                 <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
               </svg>
@@ -49,6 +49,8 @@
             </a>
           </span>
         </div>
+        <p><strong>Available Units:</strong> {{$product->num_units}}</p>
+
         <p class="leading-relaxed">{{$product->summary}}</p>
         <div class="flex mt-5 items-stretch mb-5 border-b-1 border-gray-200 flex-col gap-4">
             <div id="radio" class="flex justify-between w-full gap-4 md:flex-nowrap ">
@@ -124,9 +126,11 @@
     <h1 class="w-full px-4 sm:px-52 py-2 mt-16 text-center font-semibold">Reviews</h1>
     
     <div class="w-full px-4 sm:px-52 py-2 mt-16 grid grid-cols-4">
-      @foreach ($reviews as $review)
-        <x-reviews :review="$review"/>
-      @endforeach
+      @if($reviews->count() > 0)
+        @foreach ($reviews as $review)
+          <x-reviews :review="$review"/>
+        @endforeach
+      @endif
     </div>
   </div>
 </section>

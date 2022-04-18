@@ -34,9 +34,11 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/search', [HomeController::class, 'search'])->name('search');
 Route::get('/filter', [HomeController::class, 'filter'])->name('applyFilter');
 Route::get('/sort', [HomeController::class, 'sort'])->name('applySort');
+Route::get('/category/{id}', [HomeController::class, 'category'])->name('applyCategory');
 
 
 Route::get('/store/{id}', [StoresController::class, 'show'])->name('showStore');
+Route::get('/store/verify/{id}', [StoresController::class, 'verifyStore'])->name('verifyStore');
 Route::get('/seller/store/create', [StoresController::class, 'create'])->name('createStore')->middleware('auth', 'checkUserType:seller');
 Route::post('/seller/store/save', [StoresController::class, 'save'])->name('saveStore')->middleware('auth', 'checkUserType:seller');
 Route::get('/stores', [StoresController::class, 'index'])->name('stores');
@@ -91,6 +93,8 @@ Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin')->midd
 Route::get('/admin/sellers', [AdminController::class, 'sellers'])->name('admin.sellers')->middleware('auth');
 Route::get('/admin/buyers', [AdminController::class, 'buyers'])->name('admin.buyers')->middleware('auth');
 Route::get('/admin/orders', [AdminController::class, 'orders'])->name('admin.orders')->middleware('auth');
+Route::get('/admin/products', [AdminController::class, 'products'])->name('admin.products')->middleware('auth');
+Route::get('/admin/products/delete/{id}', [AdminController::class, 'destroyProduct'])->name('adminDeleteProduct')->middleware('auth');
 Route::get('/admin/stores', [AdminController::class, 'stores'])->name('admin.stores')->middleware('auth');
 Route::get('/admin/user/{id}/delete', [AdminController::class, 'destroyUser'])->name('deleteUser')->middleware('auth');
 
@@ -101,9 +105,6 @@ Route::get('/seller/messages', [MessagesController::class, 'dash_index'])->name(
 Route::get('/seller/messages/{id}', [MessagesController::class, 'show'])->name('showMessage')->middleware('auth', 'checkUserType:seller');
 Route::get('/messages/{id}', [MessagesController::class, 'showBuyer'])->name('showMessageBuyer')->middleware('auth');
 Route::get('/seller/messages/{id}/reply', [MessagesController::class, 'reply'])->name('reply')->middleware('auth', 'checkUserType:seller');
-
-
-
 
 
 

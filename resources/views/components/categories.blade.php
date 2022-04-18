@@ -4,7 +4,7 @@
     </li>
     @foreach ($categories as $category)
     <li>
-        <a href="#" class="block px-2 py-3"> {{$category->name}} </a>
+        <a href="{{route('applyCategory', ['id' => $category->id])}}" class="block px-2 py-3"> {{$category->name}} </a>
     </li>
     @endforeach
 </ul>

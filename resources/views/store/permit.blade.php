@@ -1,0 +1,1 @@
+<img src="@if($path){{asset('images/store_permits/'.$path)}} @else {{asset('images/store_permits/null.jpg')}} @endif" class="w-full">

@@ -67,6 +67,8 @@ class OrderController extends Controller
 
     public function dash_cancel($id){
         $order = auth()->user()->store->order()->find($id);
+        $order->product->num_units += $order->quantity;
+        $order->product->save();
         $order->status = 'cancelled';
         $order->save();
         $order->delete();
@@ -83,11 +85,7 @@ class OrderController extends Controller
     }
 
     public function complete($id){
-        // if(auth()->user()->user_type == 'seller' || auth()->user()->user_type == 'admin'){
-        //     $order = auth()->user()->store->order->find($id);
-        // } else {
-            $order = auth()->user()->order->find($id);
-        // }
+        $order = auth()->user()->order->find($id);
         $order->status = 'completed';
         $order->save();
         $order->delete();

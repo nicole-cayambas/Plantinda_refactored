@@ -73,32 +73,32 @@
             <form action="{{route('applyFilter')}}" method="get" class="pt-6" id="filter-section-mobile-2">
               <div class="space-y-6">
                 <div class="flex items-center">
-                  <input onClick="applyFilter(this)" id="filter-mobile-size-0" name="price" value="500" type="checkbox" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+                  <input onClick="applyFilter(this)" id="filter-mobile-size-0" name="price" value="price1" type="radio" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
                   <label for="filter-mobile-size-0" class="ml-3 min-w-0 flex-1 text-gray-500"> < Php 500 </label>
                 </div>
               
                 <div class="flex items-center">
-                  <input onClick="applyFilter(this)" id="filter-mobile-size-1" name="price" value="1000" type="checkbox" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+                  <input onClick="applyFilter(this)" id="filter-mobile-size-1" name="price" value="price2" type="radio" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
                   <label for="filter-mobile-size-1" class="ml-3 min-w-0 flex-1 text-gray-500"> Php 501 - Php 1000 </label>
                 </div>
               
                 <div class="flex items-center">
-                  <input onClick="applyFilter(this)" id="filter-mobile-size-2" name="price" value="5000" type="checkbox" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+                  <input onClick="applyFilter(this)" id="filter-mobile-size-2" name="price" value="price3" type="radio" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
                   <label for="filter-mobile-size-2" class="ml-3 min-w-0 flex-1 text-gray-500"> Php 1001 - Php 5000 </label>
                 </div>
               
                 <div class="flex items-center">
-                  <input onClick="applyFilter(this)" id="filter-mobile-size-3" name="price" value="10000" type="checkbox" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+                  <input onClick="applyFilter(this)" id="filter-mobile-size-3" name="price" value="price4" type="radio" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
                   <label for="filter-mobile-size-3" class="ml-3 min-w-0 flex-1 text-gray-500"> Php 5001 - Php 10000 </label>
                 </div>
               
                 <div class="flex items-center">
-                  <input onClick="applyFilter(this)" id="filter-mobile-size-4" name="price" value="20000" type="checkbox" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+                  <input onClick="applyFilter(this)" id="filter-mobile-size-4" name="price" value="price5" type="radio" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
                   <label for="filter-mobile-size-4" class="ml-3 min-w-0 flex-1 text-gray-500"> Php 10001 - Php 20000 </label>
                 </div>
               
                 <div class="flex items-center">
-                  <input onClick="applyFilter(this)" id="filter-mobile-size-5" name="price" value="6" type="checkbox" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+                  <input onClick="applyFilter(this)" id="filter-mobile-size-5" name="price" value="price6" type="radio" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
                   <label for="filter-mobile-size-5" class="ml-3 min-w-0 flex-1 text-gray-500"> > Php 20001 </label>
                 </div>
               </div>
@@ -113,6 +113,7 @@
     <h1 class="text-2xl font-bold tracking-tight text-gray-900">Home</h1>
     @if($status == 'search') <p> Showing results for '{{$query}}'</p> @endif
     @if($status == 'sort' && $sorter!= "") <p> Sorted by {{$sorter}}</p> @endif
+    @if($status == 'categoryFilter') <p> Showing all {{$category->name}}</p> @endif
     <div class="flex items-center">
        <form action="{{route('applySort')}}" method="GET" id="sort" class="group inline-flex justify-center hover:text-gray-900 w-15 sm:w-40 rounded-md shadow-2xl bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" tabindex="-1"> 
         @if($status == 'search' || $status == 'sort')
@@ -191,34 +192,34 @@
           <span class="font-medium text-gray-900"> Price </span>
         </h3>
         <!-- Filter section, show/hide based on section state. -->
-        <div action="{{route('applyFilter')}}" method="get" class="pt-6" id="filter-section-2">
+        <form action="{{route('applyFilter')}}" method="get" class="pt-6" id="filter-section-2">
           <div class="space-y-4">
             <div class="flex items-center">
-              <input onClick="applyFilter(this)" id="filter-size-0" name="price" value="1" type="radio" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+              <input onClick="applyFilter(this)" id="filter-size-0" name="price" value="price1" type="radio" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
               <label for="filter-size-0" class="ml-3 text-sm text-gray-600"> < Php 500 </label>
             </div>
             <div class="flex items-center">
-              <input onClick="applyFilter(this)" id="filter-size-1" name="price" value="2" type="radio" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+              <input onClick="applyFilter(this)" id="filter-size-1" name="price" value="price2" type="radio" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
               <label for="filter-size-1" class="ml-3 text-sm text-gray-600"> Php 501 - Php 1000 </label>
             </div>
             <div class="flex items-center">
-              <input onClick="applyFilter(this)" id="filter-size-2" name="price" value="3" type="radio" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+              <input onClick="applyFilter(this)" id="filter-size-2" name="price" value="price3" type="radio" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
               <label for="filter-size-2" class="ml-3 text-sm text-gray-600"> Php 1001 - Php 5000 </label>
             </div>
             <div class="flex items-center">
-              <input onClick="applyFilter(this)" id="filter-size-3" name="price" value="4" type="radio" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+              <input onClick="applyFilter(this)" id="filter-size-3" name="price" value="price4" type="radio" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
               <label for="filter-size-3" class="ml-3 text-sm text-gray-600"> Php 5001 - Php 10000 </label>
             </div>
             <div class="flex items-center">
-              <input onClick="applyFilter(this)" id="filter-size-4" name="price" value="5" type="radio" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+              <input onClick="applyFilter(this)" id="filter-size-4" name="price" value="price5" type="radio" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
               <label for="filter-size-4" class="ml-3 text-sm text-gray-600"> Php 10001 - Php 20000 </label>
             </div>
             <div class="flex items-center">
-              <input onClick="applyFilter(this)" id="filter-size-5" name="price" value="6" type="radio" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+              <input onClick="applyFilter(this)" id="filter-size-5" name="price" value="price6" type="radio" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
               <label for="filter-size-5" class="ml-3 text-sm text-gray-600"> Php 20001 </label>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
       <!-- Product grid -->

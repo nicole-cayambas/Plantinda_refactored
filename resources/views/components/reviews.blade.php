@@ -27,6 +27,14 @@
         <div>
             <p>{{$review->comment}}</p>
         </div>
+        @if ($review->image)
+            <div>
+                <span class="inline-block h-40 w-40 rounded-lg overflow-hidden bg-gray-100">
+                    <img src="{{asset('images/reviews/'.$review->image)}}" alt="{{$review->image}}">
+                </span>
+            </div>
+        @endif
+        
         <p class="text-sm">{{$review->created_at}}</p>
         @auth
             @if($review->user->id == auth()->user()->id)

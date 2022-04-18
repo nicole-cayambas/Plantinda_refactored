@@ -64,7 +64,13 @@ class AdminController extends Controller
     public function products()
     {
         $products = Product::orderBy('id', 'desc')->paginate(10);
-        return view('admin.products');
+        return view('admin.products')->with('products', $products);
+    }
+
+    public function destroyProduct($id){
+        $product = Product::find($id);
+        $product->delete();
+        return redirect()->back()->with('status', 'Product deleted successfully');
     }
 
     public function stores()

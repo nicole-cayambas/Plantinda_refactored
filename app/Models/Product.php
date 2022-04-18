@@ -26,6 +26,8 @@ class Product extends Model
         'range_4_max',
         'shipping_price',
         'image',
+        'category_id',
+        'num_units',
     ];
     public function store(){
         return $this->belongsTo(Store::class);
@@ -49,5 +51,8 @@ class Product extends Model
 
     public function message(){
         return $this->hasMany(Message::class);
+    }
+    public function category(){
+        return $this->belongsTo(Category::class);
     }
 }

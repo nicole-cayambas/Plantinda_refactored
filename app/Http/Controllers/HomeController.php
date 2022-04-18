@@ -33,12 +33,41 @@ class HomeController extends Controller
 
     public function filter(Request $request){
         $categories = Category::orderBy('parent_id', 'desc')->get();
-        $products = Product::where('rating', (int)$request->input('rating'))->orderBy('created_at', 'desc')->paginate(30);
+        if($request->price){
+            if($request->price == 'price1'){
+                $products = Product::where('unit_price_1', '>', 0)->where('unit_price_4', '<', 500)->orderBy('created_at', 'desc')->paginate(30);
+            } else if($request->price == 'price2'){
+                $products = Product::where('unit_price_1', '>', 501)->where('unit_price_4', '<', 1000)->orderBy('created_at', 'desc')->paginate(30);
+            } else if($request->price == 'price3'){
+                $products = Product::where('unit_price_1', '>', 1001)->where('unit_price_4', '<', 5000)->orderBy('created_at', 'desc')->paginate(30);
+            } else if($request->price == 'price4'){
+                $products = Product::where('unit_price_1', '>', 5001)->where('unit_price_4', '<', 10000)->orderBy('created_at', 'desc')->paginate(30);
+            } else if($request->price == 'price5'){
+                $products = Product::where('unit_price_1', '>', 10001)->where('unit_price_4', '<', 20000)->orderBy('created_at', 'desc')->paginate(30);
+            } else {
+                $products = Product::where('unit_price_1', '>', 20001)->orderBy('created_at', 'desc')->paginate(30);
+            }
+        }
+        else {
+            $products = Product::where('rating', (int)$request->input('rating'))->orderBy('created_at', 'desc')->paginate(30);
+        }
 
         return view('Home.index', [
             'products' => $products,
             'categories' => $categories,
             'status' => 'filter',
+        ]);
+    }
+
+    public function category($id){
+        $category = Category::find($id);
+        $categories = Category::orderBy('parent_id', 'desc')->get();
+        $products = Product::where('category_id', $id)->orderBy('created_at', 'desc')->paginate(30);
+        return view('Home.index', [
+            'products' => $products,
+            'categories' => $categories,
+            'category' => $category,
+            'status' => 'categoryFilter'
         ]);
     }
 

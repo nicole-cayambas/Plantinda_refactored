@@ -43,6 +43,9 @@
             @endforeach
         </tbody>
     </table>
+    <div class="mt-10 flex w-ful justify-center">
+        {{ $sellers->links() }}
+    </div>
 </div>
 @endauth
 @endsection
